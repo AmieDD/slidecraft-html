@@ -1,0 +1,16 @@
+{
+  "seriesName": "SKILL.md for new users",
+  "year": "2026",
+  "stylesheet": "css/global.css",
+  "pagePrefix": "skill-md-part",
+  "pageGlob": "skill-md-part-*.html",
+  "fileLocation": ".",
+  "fonts": {
+    "display": "Fraunces",
+    "body": "Inter Tight",
+    "mono": "JetBrains Mono"
+  },
+  "footerLine": "MakeItPretty · A field guide to SKILL.md for new authors · 2026",
+  "useItalicEmAccent": true,
+  "archetypes": ["editorial"]
+}

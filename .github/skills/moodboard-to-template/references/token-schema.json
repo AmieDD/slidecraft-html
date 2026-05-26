@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://amiedd.dev/schemas/moodboard-tokens/v1.json",
+  "title": "Moodboard Vision Tokens (DTCG-ish)",
+  "$comment": "Reconstructed 2026-05-14 from vision-to-html-tokens-research.md §1.3, which provides an instance example rather than a schema document. Role-named tokens, per-token confidence (0..1), and top-level a11y.checks[] are required so the model's uncertainty and WCAG compliance are inspectable before HTML is emitted.",
+  "type": "object",
+  "required": ["meta", "color", "typography", "space", "radius", "shadow", "motion", "a11y"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "meta": {
+      "type": "object",
+      "required": ["mood", "sources", "confidence_overall", "notes"],
+      "additionalProperties": true,
+      "properties": {
+        "mood": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "maxItems": 8,
+          "description": "3–5 mood adjectives sampled from the board (e.g., editorial, warm, mid-century)."
+        },
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Filenames of attached mood board images — never base64 payloads."
+        },
+        "confidence_overall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Required. Must record outliers, single-board flag ('single-board input — no cross-image reconciliation performed'), and any WCAG auto-adjustments (orig + adjusted + ratio)."
+        }
+      }
+    },
+    "color": {
+      "type": "object",
+      "required": ["surface", "ink", "accent", "accent-ink"],
+      "additionalProperties": { "$ref": "#/$defs/colorToken" },
+      "properties": {
+        "surface":     { "$ref": "#/$defs/colorToken" },
+        "surface-alt": { "$ref": "#/$defs/colorToken" },
+        "ink":         { "$ref": "#/$defs/colorToken" },
+        "ink-muted":   { "$ref": "#/$defs/colorToken" },
+        "accent":      { "$ref": "#/$defs/colorToken" },
+        "accent-ink":  { "$ref": "#/$defs/colorToken" },
+        "border":      { "$ref": "#/$defs/colorToken" },
+        "focus":       { "$ref": "#/$defs/colorToken" },
+        "code-bg":     { "$ref": "#/$defs/colorToken" },
+        "code-ink":    { "$ref": "#/$defs/colorToken" }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "required": ["font-display", "font-body", "font-mono", "scale", "leading", "weight"],
+      "additionalProperties": false,
+      "properties": {
+        "font-display": { "$ref": "#/$defs/fontToken" },
+        "font-body":    { "$ref": "#/$defs/fontToken" },
+        "font-mono":    { "$ref": "#/$defs/fontToken" },
+        "scale": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Keys: xs, sm, base, lg, xl, 2xl, 3xl. Use clamp() for hero where appropriate."
+        },
+        "leading": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Keys: tight, normal, loose."
+        },
+        "weight": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Keys: regular, bold."
+        }
+      }
+    },
+    "space": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Eight stops, keys: space-1 through space-8. 4px base, ~1.5x modular ratio (4, 8, 12, 16, 24, 32, 48, 64)."
+    },
+    "radius": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "sm, md, lg."
+    },
+    "shadow": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "sm, md, lg. Use near-zero values when the mood board is flat."
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "fast, base, slow, ease-standard, ease-emphasized."
+    },
+    "a11y": {
+      "type": "object",
+      "required": ["checks"],
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["pair", "ratio", "level"],
+            "additionalProperties": true,
+            "properties": {
+              "pair":  { "type": "string", "description": "e.g. 'ink/surface', 'accent-ink/accent'." },
+              "ratio": { "type": "number", "minimum": 1 },
+              "level": { "type": "string", "enum": ["FAIL", "AA", "AAA"] },
+              "note":  { "type": "string" }
+            }
+          }
+        },
+        "failures": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Pairs that initially failed AA. If auto-adjusted, record original + adjusted in meta.notes."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "colorToken": {
+      "type": "object",
+      "required": ["value", "role", "confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "value":      { "type": "string", "description": "CSS color (hex, oklch, rgb, hsl)." },
+        "role":       { "type": "string", "description": "Human-readable role, e.g. 'page background', 'links / primary action'." },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "≥0.85 sampled; 0.6–0.85 inferred; <0.6 defaulted (must add note)." },
+        "note":       { "type": "string" },
+        "contrast": {
+          "type": "object",
+          "description": "WCAG 2.2 ratios computed before HTML is emitted.",
+          "additionalProperties": { "type": "number", "minimum": 1 },
+          "properties": {
+            "vs_surface": { "type": "number", "minimum": 1 },
+            "vs_ink":     { "type": "number", "minimum": 1 },
+            "vs_accent":  { "type": "number", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "fontToken": {
+      "type": "object",
+      "required": ["value", "confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "value":         { "type": "string", "description": "Full CSS font-family stack including system fallback." },
+        "confidence":    { "type": "number", "minimum": 0, "maximum": 1 },
+        "system_safe":   { "type": "boolean", "description": "true = no @import required; uses system fonts only." },
+        "fallback_only": { "type": "boolean", "description": "true = the named family is a free Google Font alternative because the inferred family was paid/proprietary." },
+        "note":          { "type": "string" }
+      }
+    }
+  }
+}

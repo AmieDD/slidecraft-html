@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is a SKILL.md? · SKILL.md for new users · Part 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  /* Page-specific overrides only */
+  :root {
+    --accent: #1F6F7A;        /* deep teal — clarity / first-principles */
+    --accent-soft: #D4E5E7;
+    --accent-bright: #3A9AA8;
+    --accent-deep: #114048;
+  }
+
+  /* Editorial drop-cap on the first lede */
+  .prose > p.lede:first-child::first-letter,
+  .prose .opens-with::first-letter {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 4.2em;
+    line-height: 0.85;
+    float: left;
+    padding: 0.05em 0.12em 0 0;
+    color: var(--accent);
+  }
+
+  /* Definition grid — 3 cards explaining the three things SKILL.md does */
+  .def-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 32px;
+  }
+  .def-card {
+    background: var(--bg-card);
+    border-top: 3px solid var(--accent);
+    padding: 24px 24px 28px;
+  }
+  .def-card .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 14px;
+  }
+  .def-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .def-card h4 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .def-card p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  @media (max-width: 800px) { .def-grid { grid-template-columns: 1fr; } }
+
+  /* Two-up "yes / no" panel */
+  .yesno {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--rule);
+    margin: 32px 0;
+  }
+  .yesno > div { padding: 24px 26px; }
+  .yesno .yes { background: var(--accent-soft); border-right: 1px solid var(--rule); }
+  .yesno h5 {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+  }
+  .yesno ul { list-style: none; padding: 0; }
+  .yesno li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+  .yesno .yes li::before {
+    content: "✓";
+    position: absolute; left: 0;
+    color: var(--accent-deep);
+    font-weight: 700;
+  }
+  .yesno .no li::before {
+    content: "✗";
+    position: absolute; left: 0;
+    color: var(--ink-faint);
+  }
+  @media (max-width: 700px) {
+    .yesno { grid-template-columns: 1fr; }
+    .yesno .yes { border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="masthead">
+  <div>SKILL.md for new users · Field guide</div>
+  <div class="vol">No. 01</div>
+  <div>2026</div>
+</div>
+
+<main id="main">
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="part-tag">Part 01 · The Primitive</div>
+        <h1>What <em>is</em> a SKILL.md, really?</h1>
+      </div>
+      <div class="hero-meta">
+        <div class="label">In this part</div>
+        <p>The one-paragraph definition, the three things a skill actually does, and the shortest possible example. No agents, no orchestration — just the file.</p>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <p class="deck">A SKILL.md is not a prompt, not a plugin, and not an agent. It's <em>a folder of expertise your agent only loads when it's needed</em>.</p>
+      <p class="byline">Series · 3 parts · Start here</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">01</span>
+      <span class="lbl">The Definition</span>
+    </div>
+    <h2>A skill is <em>conditional knowledge</em> in a folder.</h2>
+    <div class="prose">
+      <p class="lede">A skill is a single folder on disk. Inside it: one <code>SKILL.md</code> file with YAML frontmatter, plus any supporting assets — templates, scripts, reference docs. The agent reads the frontmatter all the time, but only opens the body <em>when your request matches</em>.</p>
+      <p>That last sentence is the whole point. Skills are <em>lazy</em>. Their full content does not live in the model's context. Only the short <code>description</code> field does. When you say something that matches that description, the agent reaches into the folder, loads the body, and uses it for the rest of the task.</p>
+      <p>This is what makes a skill different from a system prompt, a README, or "instructions you paste at the start of every chat." Those are always on, always burning tokens, always crowding out whatever else the model needs to think about. A skill only shows up when it's relevant.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">02</span>
+      <span class="lbl">The Anatomy</span>
+    </div>
+    <h2>The smallest possible <em>SKILL.md</em>.</h2>
+    <p class="lede">Two pieces: a frontmatter header that tells the agent <em>when</em> to load you, and a body that tells it <em>how</em> to behave once it has.</p>
+
+    <pre class="codeblock"><span class="cm">---</span>
+<span class="kw">name</span>: <span class="str">brand-voice</span>
+<span class="kw">description</span>: <span class="str">Apply the company's brand voice and tone rules
+  when writing user-facing copy, marketing pages, or
+  error messages. WHEN: drafting microcopy, writing
+  release notes, polishing product descriptions.</span>
+<span class="cm">---</span>
+
+<span class="yellow-hl"># Brand Voice</span>
+
+We write in <span class="red-hl">first person plural</span>, in short
+sentences, and we never use the word "leverage."
+
+<span class="yellow-hl">## When to apply</span>
+
+- Marketing pages and landing copy
+- In-product empty states and error messages
+- Release notes
+
+<span class="yellow-hl">## Rules</span>
+
+1. Verbs over nouns. "Ship it," not "shipment."
+2. Cut every adverb. If it survives a re-read, keep it.
+3. No em-dashes in product copy. Use commas or periods.</pre>
+
+    <div class="prose">
+      <p>That's a working skill. The <code>name</code> is the folder's identity. The <code>description</code> is what the agent reads on every turn — it has to be specific enough that the agent can tell when you need it and when you don't. The body is the actual expertise, written for the agent to read like a teammate's note.</p>
+      <p>Notice what's <em>not</em> in there: no code that runs, no API to call, no special syntax. A skill is just markdown.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">03</span>
+      <span class="lbl">The Three Jobs</span>
+    </div>
+    <h2>What a skill actually <em>does</em>.</h2>
+    <p class="lede">Every skill, regardless of topic, is doing one or more of these three things. If your draft doesn't match any of them, it probably wants to be a different kind of file.</p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <div class="tag">Job 01</div>
+        <h4>Carries <em>domain knowledge</em>.</h4>
+        <p>Things the model can't infer from your codebase alone: your company's API conventions, the way your team writes ADRs, the exact wording your legal team approved, the steps for an internal release.</p>
+      </div>
+      <div class="def-card">
+        <div class="tag">Job 02</div>
+        <h4>Encodes a <em>workflow</em>.</h4>
+        <p>A sequence the agent should follow when a certain kind of task shows up: "before refactoring this module, run these checks," or "when writing a migration, always pair it with a rollback note."</p>
+      </div>
+      <div class="def-card">
+        <div class="tag">Job 03</div>
+        <h4>Bundles <em>assets</em>.</h4>
+        <p>Templates, example outputs, configuration files, small scripts the skill tells the agent to run. The folder is the skill — the markdown just tells the agent what's inside and when to use it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">04</span>
+      <span class="lbl">When It's a Skill</span>
+    </div>
+    <h2>Is this a skill, or is it <em>something else</em>?</h2>
+    <p class="lede">Most new authors over-skill. They turn every preference into a folder. Use this gut-check before you scaffold one.</p>
+
+    <div class="yesno">
+      <div class="yes">
+        <h5>Yes — make it a skill</h5>
+        <ul>
+          <li>It's expertise the agent needs <em>sometimes</em>, not always.</li>
+          <li>It bundles knowledge plus assets (templates, examples, scripts).</li>
+          <li>It describes <em>how</em> to do a kind of work, not <em>what</em> to do this turn.</li>
+          <li>You'd want to reuse it across many conversations or projects.</li>
+          <li>You can write a one-sentence description that says exactly when to load it.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h5>No — try a different file</h5>
+        <ul>
+          <li>It's a rule that should fire automatically on certain files → <code>.instructions.md</code></li>
+          <li>It's a single command you run from a menu → <code>.prompt.md</code></li>
+          <li>It's a persona the model should adopt for a whole task → <code>.agent.md</code></li>
+          <li>It's one-off context for today's chat → just paste it in the chat</li>
+          <li>It's documentation for humans → a regular README</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      A skill is <em>knowledge the agent can earn</em> — not a prompt the agent has to suffer through on every turn.
+      <cite>— Field note · new-author workshop</cite>
+    </div>
+  </div>
+</section>
+
+<section class="bridge">
+  <div class="container">
+    <div class="bridge-tag">Up next · Part 02</div>
+    <h3>You have the file. Now learn <em>how the agent finds it</em>.</h3>
+  </div>
+</section>
+
+</main>
+
+<nav class="page-nav" aria-label="Series navigation">
+  <a href="#" class="prev-pill" aria-disabled="true">Prev · (first part)</a>
+  <a href="skill-md-part-2.html" class="next-pill">Next · How to use a skill</a>
+</nav>
+
+<footer>
+  <div class="colophon">MakeItPretty · A field guide to SKILL.md for new authors · 2026</div>
+</footer>
+
+</body>
+</html>

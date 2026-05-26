@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill vs Agent · SKILL.md for new users · Part 03</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  :root {
+    --accent: #8A6E1F;        /* mustard / olive — decision-making */
+    --accent-soft: #EBE2C4;
+    --accent-bright: #C49A36;
+    --accent-deep: #5C4710;
+  }
+
+  /* Side-by-side comparison */
+  .vs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--rule);
+    margin: 32px 0;
+  }
+  .vs > div { padding: 26px 28px; }
+  .vs .side-skill { border-right: 1px solid var(--rule); background: var(--bg-card); }
+  .vs .side-agent { background: var(--accent-soft); }
+  .vs h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+  .vs .kicker {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .vs ul { list-style: none; padding: 0; margin-top: 14px; }
+  .vs li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .vs li::before {
+    content: "›";
+    position: absolute; left: 0;
+    color: var(--accent-deep);
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  @media (max-width: 800px) {
+    .vs { grid-template-columns: 1fr; }
+    .vs .side-skill { border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+
+  /* Decision matrix */
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.96rem;
+  }
+  .matrix th, .matrix td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .matrix th {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 2px solid var(--rule);
+  }
+  .matrix td:first-child {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    width: 32%;
+  }
+  .matrix td .pick {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    margin-right: 8px;
+    border: 1px solid currentColor;
+  }
+  .matrix .pick-skill { color: var(--accent-deep); }
+  .matrix .pick-agent { color: var(--warn); }
+  .matrix .pick-both  { color: var(--ink-soft); }
+
+  /* Three-archetype recap */
+  .archetypes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .arch {
+    border-top: 3px solid var(--accent);
+    padding-top: 18px;
+  }
+  .arch .tag {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 10px;
+  }
+  .arch h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .arch h4 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .arch p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.55; }
+  @media (max-width: 800px) { .archetypes { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="masthead">
+  <div>SKILL.md for new users · Field guide</div>
+  <div class="vol">No. 03</div>
+  <div>2026</div>
+</div>
+
+<main id="main">
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="part-tag">Part 03 · The Decision</div>
+        <h1>Skill or <em>agent</em>? Pick the right one.</h1>
+      </div>
+      <div class="hero-meta">
+        <div class="label">In this part</div>
+        <p>How a SKILL.md differs from a regular agent, the one question that picks between them, a decision matrix for real cases, and a recap to take into your first authoring session.</p>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <p class="deck">A skill is <em>knowledge the agent loads</em>. An agent is <em>a worker you summon</em>. Most teams confuse them, and most over-build agents when a skill would have done the work.</p>
+      <p class="byline">Series · Final part · 3 of 3</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">01</span>
+      <span class="lbl">The Distinction</span>
+    </div>
+    <h2>Different <em>shape</em>, different job.</h2>
+    <p class="lede">A regular agent is a configured persona with its own tool budget, conversation context, and lifecycle. A skill is a folder of expertise that <em>any</em> agent can pick up and use. They're not competitors. They're different layers.</p>
+
+    <div class="vs">
+      <div class="side-skill">
+        <div class="kicker">Layer · Knowledge</div>
+        <h4>SKILL.md</h4>
+        <p>A folder. A markdown file with YAML frontmatter. The agent loads it <em>on demand</em> when your request matches its description.</p>
+        <ul>
+          <li>Loaded by description match — lazy, not always on.</li>
+          <li>Has no tools of its own; it tells the host agent what to do.</li>
+          <li>Reusable across many agents and many conversations.</li>
+          <li>Cheap to write, cheap to delete, cheap to version.</li>
+          <li>Lives next to the code it serves.</li>
+        </ul>
+      </div>
+      <div class="side-agent">
+        <div class="kicker">Layer · Worker</div>
+        <h4>Agent (.agent.md)</h4>
+        <p>A configured role with its own identity, system prompt, tool allow-list, and (sometimes) its own model. You <em>summon</em> it to do a task; it runs and reports back.</p>
+        <ul>
+          <li>Always present when invoked — owns its own conversation.</li>
+          <li>Has tools and constraints declared upfront.</li>
+          <li>Can be a subagent: the main agent delegates work to it.</li>
+          <li>Heavier to author; pays off when the role is reused.</li>
+          <li>Often <em>consumes</em> skills to do its job.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>The headline distinction: agents <em>do</em> things; skills tell whoever is doing the work <em>how</em>. A good agent is small and consumes many skills. A good skill is small and gets consumed by many agents.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">02</span>
+      <span class="lbl">The One Question</span>
+    </div>
+    <h2>Ask: do I need a <em>worker</em>, or just <em>expertise</em>?</h2>
+    <p class="lede">If the answer involves a new persona, new tools, or a delegated subtask the main agent shouldn't handle directly — that's an agent. If the answer is "the main agent just needs to know how to do this kind of work" — that's a skill.</p>
+
+    <div class="prose">
+      <p>A few sharper tests:</p>
+      <ul>
+        <li>Does it need a <em>constrained tool list</em> different from the host agent's? → Agent.</li>
+        <li>Does it run in <em>its own conversation</em> and report back a single result? → Agent (specifically a subagent).</li>
+        <li>Is it just <em>how</em> to do a task the host agent is already capable of? → Skill.</li>
+        <li>Does it bundle <em>templates, examples, or scripts</em> that get loaded only when needed? → Skill.</li>
+        <li>Do you find yourself writing "act as a…" — meaning you want a different voice or scope? → Agent.</li>
+        <li>Are you writing "when X, do Y, then Z" — a procedure for the current agent? → Skill.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">03</span>
+      <span class="lbl">Decision Matrix</span>
+    </div>
+    <h2>Real cases, picked.</h2>
+    <p class="lede">Use this as a sanity check before you scaffold anything. Most "I need an agent" requests turn out to be skills in disguise.</p>
+
+    <table class="matrix">
+      <thead>
+        <tr><th>You want…</th><th>Pick</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The agent to follow our internal release-notes format whenever it drafts release copy.</td>
+          <td><span class="pick pick-skill">Skill</span></td>
+          <td>It's a workflow the host agent runs. No new tools, no new persona. Lives in <code>release-notes/SKILL.md</code>.</td>
+        </tr>
+        <tr>
+          <td>A read-only code explorer that searches the repo and returns a summary so the main chat doesn't get cluttered.</td>
+          <td><span class="pick pick-agent">Agent</span></td>
+          <td>A subagent. Its own conversation, its own tool scope, returns one report. The main agent stays focused.</td>
+        </tr>
+        <tr>
+          <td>Convert a mood-board into HTML tokens using a procedure the team has refined.</td>
+          <td><span class="pick pick-skill">Skill</span></td>
+          <td>Bundled knowledge + a procedure + sometimes a starter file. Exactly what skills are for.</td>
+        </tr>
+        <tr>
+          <td>A "code reviewer" that reads diffs against project standards and writes severity-graded findings.</td>
+          <td><span class="pick pick-both">Both</span></td>
+          <td>The <em>reviewer</em> is an agent. The <em>standards</em> it checks against are skills the agent loads.</td>
+        </tr>
+        <tr>
+          <td>Tell the agent never to use <code>--no-verify</code> on git pushes.</td>
+          <td><span class="pick pick-skill">Neither — instructions</span></td>
+          <td>Always-on rule that binds to certain files. That's an <code>.instructions.md</code>, not a skill or agent.</td>
+        </tr>
+        <tr>
+          <td>A "PRD builder" persona that interviews you and produces a finished PRD.</td>
+          <td><span class="pick pick-agent">Agent</span></td>
+          <td>It needs a persona, a conversational lifecycle, and a specific final artifact. Agent territory.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">04</span>
+      <span class="lbl">Three Archetypes</span>
+    </div>
+    <h2>The skills you'll write <em>first</em>.</h2>
+    <p class="lede">If you're new and looking for a place to start, almost every team's first three skills fall into one of these shapes.</p>
+
+    <div class="archetypes">
+      <div class="arch">
+        <div class="tag">Archetype 01</div>
+        <h4>The <em>style guide</em>.</h4>
+        <p>Your brand voice, your error-message tone, your naming conventions. Loads on customer-facing copy. Often the easiest first skill because the rules already exist on a wiki — you're just porting them.</p>
+      </div>
+      <div class="arch">
+        <div class="tag">Archetype 02</div>
+        <h4>The <em>runbook</em>.</h4>
+        <p>A procedure for a recurring task: "how we write ADRs," "how we draft a security review," "what we check before merging a migration." Bundles templates the agent fills in.</p>
+      </div>
+      <div class="arch">
+        <div class="tag">Archetype 03</div>
+        <h4>The <em>convention pack</em>.</h4>
+        <p>How your team does something the rest of the world does differently — your testing framework choice, your folder layout, your preferred CI patterns. Stops the agent from inventing a parallel universe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">05</span>
+      <span class="lbl">The Recap</span>
+    </div>
+    <h2>Three parts, one takeaway.</h2>
+    <div class="prose">
+      <p><strong>Part 01</strong> — a skill is a folder of conditional expertise. The agent only loads its body when your request matches the description in the frontmatter.</p>
+      <p><strong>Part 02</strong> — the agent finds your skill by reading descriptions, matching against your request, and loading the body. Write the description like a search query; write the body like a runbook; test in a loop.</p>
+      <p><strong>Part 03</strong> — skills carry knowledge; agents do work. Prefer a skill when the host agent can already do the task and just needs to know how. Reach for an agent when you need a new worker with its own tools and lifecycle.</p>
+      <p>You don't need to write a perfect skill to start. You need to write a small one, watch what the agent does with it, and iterate. Every skill in production started as a 30-line file that fired on the wrong prompts until its author tightened the description.</p>
+    </div>
+
+    <div class="pullquote">
+      Skills are how the agent stops being a stranger to your team. <em>You're not training a model — you're handing it the team's notes.</em>
+      <cite>— End of series · go write one</cite>
+    </div>
+  </div>
+</section>
+
+<section class="bridge">
+  <div class="container">
+    <div class="bridge-tag">Closing · End of series</div>
+    <h3>Pick the smallest piece of knowledge your agent keeps forgetting. <em>Write that skill first.</em></h3>
+  </div>
+</section>
+
+</main>
+
+<nav class="page-nav" aria-label="Series navigation">
+  <a href="skill-md-part-2.html" class="prev-pill">Prev · How to use a skill</a>
+  <a href="#" class="next-pill" aria-disabled="true">Next · (end of series)</a>
+</nav>
+
+<footer>
+  <div class="colophon">MakeItPretty · A field guide to SKILL.md for new authors · 2026</div>
+</footer>
+
+</body>
+</html>

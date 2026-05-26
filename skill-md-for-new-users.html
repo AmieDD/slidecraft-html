@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKILL.md for new users · Get started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000000;
+    --ink: #ffffff;
+    --ink-soft: #b8b8b8;
+    --ink-dim: #6e6e6e;
+    --rule: #232323;
+    --card: #0a0a0a;
+    --accent: #FFC421;      /* signature yellow */
+    --cyan: #2BD4D9;
+    --magenta: #E0218A;
+    --orange: #F26B1F;
+    --green: #2BB673;
+    --purple: #A05CFF;
+    --red: #E63946;
+    --blue: #1F4FD8;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 56px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    padding-bottom: 72px;
+  }
+  .hero-mark {
+    font-family: var(--mono);
+    color: var(--ink);
+    font-size: 1.3rem;
+    margin-bottom: 32px;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 4.6vw, 4.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+  }
+  .hero .sub {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    max-width: 460px;
+  }
+  .ask {
+    margin-top: 6px;
+  }
+  .ask-input {
+    background: var(--bg);
+    border: 1px solid var(--ink);
+    border-bottom: 2px solid var(--accent);
+    padding: 18px 56px 18px 22px;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    width: 100%;
+    position: relative;
+  }
+  .ask-wrap { position: relative; }
+  .ask-wrap::after {
+    content: "▸";
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .chip:hover { background: rgba(255,196,33,0.1); }
+
+  /* Color spectrum bar under hero */
+  .spectrum {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    height: 6px;
+    margin-top: 24px;
+  }
+  .spectrum span:nth-child(1) { background: var(--cyan); }
+  .spectrum span:nth-child(2) { background: var(--cyan); opacity: .6; }
+  .spectrum span:nth-child(3) { background: var(--blue); }
+  .spectrum span:nth-child(4) { background: var(--blue); opacity: .5; }
+  .spectrum span:nth-child(11) { background: var(--blue); }
+  .spectrum span:nth-child(12) { background: var(--blue); opacity: .5; }
+  .spectrum span:nth-child(13) { background: var(--cyan); }
+  .spectrum span:nth-child(14) { background: var(--cyan); opacity: .4; }
+
+  /* ---------- DECORATIVE PIXEL ART ---------- */
+  .pixel-art {
+    position: relative;
+    height: 360px;
+    overflow: hidden;
+  }
+  .pixel-art .tick {
+    position: absolute;
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+  .pixel-art .block {
+    position: absolute;
+    bottom: 0;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section {
+    padding: 72px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .section h2 {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.05;
+    margin-bottom: 36px;
+    max-width: 14ch;
+  }
+  .section .lede {
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin-bottom: 32px;
+    font-size: 1.02rem;
+  }
+
+  /* ---------- TOPIC GRID (Build-style cards) ---------- */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    padding: 28px 26px 32px;
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: border-color 0.2s;
+  }
+  .topic-card:hover { border-color: var(--accent); }
+  .topic-card .bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 38px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .topic-card .bar span { display: block; }
+  .topic-card h3 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    margin-top: 8px;
+  }
+  .topic-card p {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+  }
+  .topic-card a {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .topic-card a::after { content: " ›"; }
+
+  /* color bars per card */
+  .bar.t1 span:nth-child(1){background:var(--green)} .bar.t1 span:nth-child(2){background:var(--green);opacity:.6} .bar.t1 span:nth-child(3){background:var(--cyan)} .bar.t1 span:nth-child(4){background:var(--cyan);opacity:.5} .bar.t1 span:nth-child(5){background:#5EC489} .bar.t1 span:nth-child(6){background:var(--green);opacity:.4} .bar.t1 span:nth-child(7){background:var(--green)} .bar.t1 span:nth-child(8){background:#9FE0B5} .bar.t1 span:nth-child(9){background:var(--cyan);opacity:.7} .bar.t1 span:nth-child(10){background:var(--green)} .bar.t1 span:nth-child(11){background:#5EC489;opacity:.6} .bar.t1 span:nth-child(12){background:var(--cyan)}
+
+  .bar.t2 span:nth-child(1){background:var(--orange)} .bar.t2 span:nth-child(2){background:var(--orange);opacity:.5} .bar.t2 span:nth-child(3){background:var(--red)} .bar.t2 span:nth-child(4){background:#F09A4D} .bar.t2 span:nth-child(5){background:var(--orange);opacity:.7} .bar.t2 span:nth-child(6){background:var(--red);opacity:.6} .bar.t2 span:nth-child(7){background:var(--accent)} .bar.t2 span:nth-child(8){background:var(--orange)} .bar.t2 span:nth-child(9){background:var(--red);opacity:.4} .bar.t2 span:nth-child(10){background:var(--orange)} .bar.t2 span:nth-child(11){background:var(--accent);opacity:.6} .bar.t2 span:nth-child(12){background:var(--red)}
+
+  .bar.t3 span:nth-child(1){background:var(--purple)} .bar.t3 span:nth-child(2){background:var(--blue)} .bar.t3 span:nth-child(3){background:var(--purple);opacity:.5} .bar.t3 span:nth-child(4){background:var(--cyan)} .bar.t3 span:nth-child(5){background:var(--blue);opacity:.6} .bar.t3 span:nth-child(6){background:var(--purple)} .bar.t3 span:nth-child(7){background:#C49AFF} .bar.t3 span:nth-child(8){background:var(--blue)} .bar.t3 span:nth-child(9){background:var(--purple);opacity:.4} .bar.t3 span:nth-child(10){background:var(--cyan);opacity:.7} .bar.t3 span:nth-child(11){background:var(--purple)} .bar.t3 span:nth-child(12){background:var(--blue);opacity:.5}
+
+  .bar.t4 span:nth-child(1){background:var(--accent)} .bar.t4 span:nth-child(2){background:var(--orange)} .bar.t4 span:nth-child(3){background:var(--accent);opacity:.6} .bar.t4 span:nth-child(4){background:#FFE082} .bar.t4 span:nth-child(5){background:var(--orange);opacity:.5} .bar.t4 span:nth-child(6){background:var(--accent)} .bar.t4 span:nth-child(7){background:var(--orange)} .bar.t4 span:nth-child(8){background:var(--accent);opacity:.4} .bar.t4 span:nth-child(9){background:#FFE082} .bar.t4 span:nth-child(10){background:var(--orange)} .bar.t4 span:nth-child(11){background:var(--accent)} .bar.t4 span:nth-child(12){background:var(--orange);opacity:.6}
+
+  .bar.t5 span:nth-child(1){background:var(--magenta)} .bar.t5 span:nth-child(2){background:var(--red)} .bar.t5 span:nth-child(3){background:var(--magenta);opacity:.5} .bar.t5 span:nth-child(4){background:#F06AAA} .bar.t5 span:nth-child(5){background:var(--red);opacity:.6} .bar.t5 span:nth-child(6){background:var(--magenta)} .bar.t5 span:nth-child(7){background:#F06AAA} .bar.t5 span:nth-child(8){background:var(--red)} .bar.t5 span:nth-child(9){background:var(--magenta);opacity:.4} .bar.t5 span:nth-child(10){background:var(--red);opacity:.7} .bar.t5 span:nth-child(11){background:var(--magenta)} .bar.t5 span:nth-child(12){background:#F06AAA}
+
+  .bar.t6 span:nth-child(1){background:var(--green)} .bar.t6 span:nth-child(2){background:#5EC489} .bar.t6 span:nth-child(3){background:var(--green);opacity:.6} .bar.t6 span:nth-child(4){background:var(--blue)} .bar.t6 span:nth-child(5){background:var(--green);opacity:.4} .bar.t6 span:nth-child(6){background:#9FE0B5} .bar.t6 span:nth-child(7){background:var(--green)} .bar.t6 span:nth-child(8){background:#5EC489;opacity:.7} .bar.t6 span:nth-child(9){background:var(--blue);opacity:.5} .bar.t6 span:nth-child(10){background:var(--green)} .bar.t6 span:nth-child(11){background:#5EC489} .bar.t6 span:nth-child(12){background:var(--green);opacity:.6}
+
+  /* ---------- ANATOMY (code-style) ---------- */
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .code-block {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code-block .key { color: var(--cyan); }
+  .code-block .str { color: var(--accent); }
+  .code-block .com { color: var(--ink-dim); font-style: italic; }
+  .code-block .hd  { color: var(--magenta); }
+
+  .anatomy-notes h4 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    margin: 24px 0 8px;
+    color: var(--ink);
+  }
+  .anatomy-notes h4:first-child { margin-top: 0; }
+  .anatomy-notes p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .anatomy-notes .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    color: var(--accent);
+    margin-right: 6px;
+  }
+
+  /* ---------- STEPS ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .step {
+    border-top: 2px solid var(--accent);
+    padding-top: 20px;
+  }
+  .step .num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .step h4 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .step p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  /* ---------- CTA STRIP ---------- */
+  .cta {
+    margin-top: 56px;
+    padding: 56px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta h3 {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    max-width: 20ch;
+  }
+  .cta p { color: var(--ink-soft); margin-bottom: 24px; max-width: 50ch; }
+  .btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 14px 28px;
+    text-decoration: none;
+    border: 1px solid var(--accent);
+  }
+  .btn.ghost { background: transparent; color: var(--accent); margin-left: 8px; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 80px;
+    padding: 32px 0;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---------- DECORATIONS ---------- */
+  .ticks {
+    display: flex;
+    gap: 3px;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    margin-bottom: 24px;
+    letter-spacing: 0.3em;
+  }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 32px 24px; }
+    .hero, .anatomy, .topic-grid, .steps { grid-template-columns: 1fr; gap: 32px; }
+    .pixel-art { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div>
+      <span class="hero-mark">↻ skill.md</span>
+      <h1>Your first<br>SKILL.md,<br>without the panic.</h1>
+      <p class="sub">A starter guide for new authors. Learn what a skill is, how it loads, and how to write one your agent will actually find.</p>
+      <div class="spectrum">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div>
+      <div class="ask">
+        <div class="ask-wrap">
+          <input class="ask-input" type="text" placeholder="Ask anything about authoring SKILL.md" disabled>
+        </div>
+        <div class="chips">
+          <button class="chip">What is a skill?</button>
+          <button class="chip">Show me a template</button>
+        </div>
+      </div>
+      <div class="pixel-art" aria-hidden="true">
+        <span class="tick" style="top:20px;left:10%;">||||||</span>
+        <span class="tick" style="top:40px;left:28%;">|||| ||||</span>
+        <span class="tick" style="top:14px;left:55%;">||||||||</span>
+        <span class="tick" style="top:50px;left:78%;">|||||</span>
+        <span class="block" style="left:5%;width:50px;height:140px;background:var(--blue)"></span>
+        <span class="block" style="left:12%;width:40px;height:90px;background:var(--cyan)"></span>
+        <span class="block" style="left:22%;width:60px;height:180px;background:var(--magenta)"></span>
+        <span class="block" style="left:33%;width:30px;height:240px;background:var(--red)"></span>
+        <span class="block" style="left:40%;width:50px;height:120px;background:var(--orange)"></span>
+        <span class="block" style="left:50%;width:45px;height:200px;background:var(--purple)"></span>
+        <span class="block" style="left:58%;width:55px;height:100px;background:#C49AFF"></span>
+        <span class="block" style="left:68%;width:40px;height:170px;background:var(--green)"></span>
+        <span class="block" style="left:76%;width:60px;height:130px;background:var(--accent)"></span>
+        <span class="block" style="left:86%;width:50px;height:220px;background:var(--magenta)"></span>
+        <span class="block" style="left:94%;width:30px;height:90px;background:var(--cyan)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IS A SKILL ============ -->
+  <section class="section">
+    <div class="ticks">|||| ||| ||||||</div>
+    <h2>So what<br>is a skill?</h2>
+    <p class="lede">A <strong>SKILL.md</strong> is a single Markdown file that teaches your agent <em>when</em> to use a capability and <em>how</em> to use it. The frontmatter is the trigger. The body is the instructions. That's it.</p>
+
+    <div class="topic-grid">
+      <article class="topic-card">
+        <div class="bar t1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <h3>A trigger</h3>
+        <p>The description tells the agent which user requests should activate the skill.</p>
+        <a href="#anatomy">See the frontmatter</a>
+      </article>
+      <article class="topic-card">
+        <div class="bar t2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <h3>A playbook</h3>
+        <p>The body is plain Markdown. Steps, examples, code, do/don't lists — whatever your agent needs.</p>
+        <a href="#anatomy">See the body</a>
+      </article>
+      <article class="topic-card">
+        <div class="bar t3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <h3>A contract</h3>
+        <p>Skills are loaded lazily. Write them so the agent knows whether to commit before reading the whole file.</p>
+        <a href="#steps">See the rules</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ ANATOMY ============ -->
+  <section class="section" id="anatomy">
+    <div class="ticks">|| |||||| |||</div>
+    <h2>Anatomy of<br>a SKILL.md</h2>
+
+    <div class="anatomy">
+<pre class="code-block"><span class="hd">---</span>
+<span class="key">name</span>: <span class="str">my-first-skill</span>
+<span class="key">description</span>: <span class="str">Generates a starter README from a project
+  description. WHEN: "write a README", "create
+  project docs", "scaffold README.md". DO NOT
+  USE FOR: editing existing READMEs.</span>
+<span class="hd">---</span>
+
+<span class="com"># My First Skill</span>
+
+<span class="com">## When to use this</span>
+Trigger this skill only when the user wants a
+**new** README created from scratch.
+
+<span class="com">## Steps</span>
+1. Ask for project name and one-line purpose.
+2. Generate sections: Overview, Install, Usage.
+3. Write to <span class="str">README.md</span> at the repo root.
+
+<span class="com">## Don't</span>
+- Don't overwrite an existing README without
+  confirming with the user.</pre>
+
+      <div class="anatomy-notes">
+        <h4><span class="tag">01</span> The frontmatter</h4>
+        <p>Two fields matter: <code>name</code> and <code>description</code>. The description is the only thing the agent reads to decide whether to load your skill — make it specific.</p>
+
+        <h4><span class="tag">02</span> Use WHEN / DO NOT USE FOR</h4>
+        <p>Spell out trigger phrases and anti-patterns. This is the single biggest reason skills get invoked correctly.</p>
+
+        <h4><span class="tag">03</span> The body is yours</h4>
+        <p>Headings, lists, code blocks, links to other files. Keep it scannable — the agent reads top-to-bottom.</p>
+
+        <h4><span class="tag">04</span> Reference, don't inline</h4>
+        <p>For long examples or assets, link to sibling files (<code>./templates/readme.md</code>) instead of stuffing everything into SKILL.md.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEPS ============ -->
+  <section class="section" id="steps">
+    <div class="ticks">|||||| || ||||</div>
+    <h2>Write your first<br>one in 3 moves.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="num">01 / NAME IT</span>
+        <h4>Pick the trigger</h4>
+        <p>Finish this sentence: "I want my agent to do X when the user says Y." X is the skill. Y is the description.</p>
+      </div>
+      <div class="step">
+        <span class="num">02 / SHAPE IT</span>
+        <h4>Write the body</h4>
+        <p>Three sections is plenty: <em>When to use</em>, <em>Steps</em>, <em>Don't</em>. Add examples only if they change behavior.</p>
+      </div>
+      <div class="step">
+        <span class="num">03 / TEST IT</span>
+        <h4>Try the trigger</h4>
+        <p>Ask your agent the exact phrase from your description. If it doesn't load the skill, the description is too vague — rewrite and retry.</p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <h3>Ready? Start with a template.</h3>
+      <p>Copy the anatomy block above into a new <code>SKILL.md</code>, rename the file's parent folder, and you're done. Your agent will pick it up on the next session.</p>
+      <a class="btn" href="#anatomy">Copy the template ›</a>
+      <a class="btn ghost" href="https://amiedd.github.io/HVE-Detective/">Browse real skills ›</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>SKILL.md // GETTING STARTED</span>
+    <span>v1.0 · for first-time authors</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

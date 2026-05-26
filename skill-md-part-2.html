@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to use a SKILL.md · SKILL.md for new users · Part 02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  :root {
+    --accent: #B5443A;        /* warm brick — workshop energy */
+    --accent-soft: #F1D8D2;
+    --accent-bright: #D86B5E;
+    --accent-deep: #7A2C24;
+  }
+
+  /* Three-stage loading loop */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+    counter-reset: stage;
+  }
+  .flow .stage {
+    border-top: 2px solid var(--accent);
+    padding-top: 18px;
+    counter-increment: stage;
+  }
+  .flow .stage::before {
+    content: counter(stage, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+  }
+  .flow h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 8px 0 10px;
+    line-height: 1.2;
+  }
+  .flow h4 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .flow p { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.55; }
+  @media (max-width: 800px) { .flow { grid-template-columns: 1fr; } }
+
+  /* Description-quality table */
+  .desc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.95rem;
+  }
+  .desc-table th, .desc-table td {
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .desc-table th {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 2px solid var(--rule);
+  }
+  .desc-table td.grade { font-family: var(--mono); font-weight: 500; }
+  .desc-table .g-bad { color: var(--warn); }
+  .desc-table .g-ok { color: var(--ink-soft); }
+  .desc-table .g-good { color: var(--accent-deep); }
+  .desc-table code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--bg-card);
+    padding: 1px 6px;
+    border: 1px solid var(--rule);
+  }
+
+  /* Folder layout block */
+  .tree {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 22px 26px;
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 24px 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .tree .cm { color: var(--ink-faint); }
+
+  /* Check / cross list */
+  .checks {
+    margin: 24px 0;
+  }
+  .checks li {
+    list-style: none;
+    padding: 10px 0 10px 32px;
+    position: relative;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--rule);
+  }
+  .checks li:last-child { border-bottom: none; }
+  .checks li::before {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .checks li.good::before { content: "✓"; color: var(--accent-deep); }
+  .checks li.bad::before  { content: "✗"; color: var(--warn); }
+  .checks li strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="masthead">
+  <div>SKILL.md for new users · Field guide</div>
+  <div class="vol">No. 02</div>
+  <div>2026</div>
+</div>
+
+<main id="main">
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="part-tag">Part 02 · The Mechanics</div>
+        <h1>How a skill <em>actually</em> gets used.</h1>
+      </div>
+      <div class="hero-meta">
+        <div class="label">In this part</div>
+        <p>Where skills live, how the agent decides to load one, what makes a description findable, and the loop you'll run a hundred times: write, test, fix, write.</p>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <p class="deck">A skill the agent <em>never finds</em> is a skill that doesn't exist. The whole craft is making sure the right one loads at the right moment.</p>
+      <p class="byline">Series · Part 2 of 3</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">01</span>
+      <span class="lbl">Where Skills Live</span>
+    </div>
+    <h2>The folder, the file, the <em>frontmatter</em>.</h2>
+    <p class="lede">Skills are discovered by convention. The agent scans a known set of locations on every conversation and registers what it finds. You don't import a skill; you just put it in the right place.</p>
+
+    <pre class="tree">.github/
+└── skills/
+    └── brand-voice/          <span class="cm">← the skill is the folder</span>
+        ├── SKILL.md          <span class="cm">← required. frontmatter + body.</span>
+        ├── templates/
+        │   └── release-note.md
+        └── assets/
+            └── tone-examples.md</pre>
+
+    <div class="prose">
+      <p>The folder name is the skill's identity. The <code>SKILL.md</code> is the only required file. Anything else in the folder is yours to organize — templates, examples, scripts, reference notes — and the body of the SKILL.md tells the agent which of those to open when.</p>
+      <p>Different tools scan different locations (workspace skills, user skills, extension-packaged skills), but the pattern is the same everywhere: <em>a folder, a SKILL.md inside, and supporting files alongside.</em></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">02</span>
+      <span class="lbl">The Load Loop</span>
+    </div>
+    <h2>What happens when you send a message.</h2>
+    <p class="lede">The agent runs the same three steps every turn. Knowing them is how you debug a skill that "isn't firing."</p>
+
+    <div class="flow">
+      <div class="stage">
+        <h4><em>Scan</em> the descriptions.</h4>
+        <p>The agent already has the YAML frontmatter from every available skill loaded. It reads the <code>description</code> field on each one — that's it. The body of SKILL.md is <em>not</em> in context at this point.</p>
+      </div>
+      <div class="stage">
+        <h4><em>Match</em> against your request.</h4>
+        <p>The agent compares what you asked for to those descriptions. Strong keyword overlap, an explicit WHEN clause, a named tool or artifact in the description — these are what tip the match. Vague descriptions lose here.</p>
+      </div>
+      <div class="stage">
+        <h4><em>Load</em> and follow.</h4>
+        <p>If the agent picks the skill, it opens the full SKILL.md body and treats it as the playbook for the task. The skill can also point at other files in its folder — and the agent will read those on demand too.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>This is the most important mental model in this series: the agent never reads every skill in full. It triages by description, then commits to one (or a few) and reads the body. If your skill isn't loading, the description is almost always why.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">03</span>
+      <span class="lbl">Description Craft</span>
+    </div>
+    <h2>Write the <em>description</em> like a search query.</h2>
+    <p class="lede">The description is the only thing the agent sees on every turn. It has to do three jobs in one sentence: say what the skill is, when to use it, and when <em>not</em> to use it.</p>
+
+    <table class="desc-table">
+      <thead>
+        <tr><th>Grade</th><th>Description</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="grade g-bad">Bad</td>
+          <td><code>"Helps with writing."</code></td>
+          <td>Fires on every prose request. Has no domain, no triggers, no boundary.</td>
+        </tr>
+        <tr>
+          <td class="grade g-ok">OK</td>
+          <td><code>"Apply brand voice rules to user-facing copy."</code></td>
+          <td>Domain is clear, but no example triggers — the agent has to guess what "user-facing" means.</td>
+        </tr>
+        <tr>
+          <td class="grade g-good">Good</td>
+          <td><code>"Apply our brand voice to marketing pages, release notes, error messages, and in-product microcopy. WHEN: drafting customer-visible copy. DO NOT USE FOR: internal docs, code comments, or PR descriptions."</code></td>
+          <td>Concrete artifact list, an explicit WHEN, and a DO NOT clause that prevents wrong-context loading.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="prose">
+      <p>Two patterns earn their keep: a <strong>WHEN:</strong> clause listing example prompts or artifacts, and a <strong>DO NOT USE FOR:</strong> clause naming the adjacent territories the agent might confuse it with. Both are unglamorous. Both make the difference between a skill that fires and one that hides.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">04</span>
+      <span class="lbl">Body Craft</span>
+    </div>
+    <h2>Write the body for <em>an agent</em>, not a person.</h2>
+    <p class="lede">A skill body that reads like a blog post will not get followed. A skill body that reads like a runbook will.</p>
+
+    <ul class="checks">
+      <li class="good"><strong>Lead with the procedure.</strong> "Step 1, step 2, step 3" beats "first, let's discuss the philosophy of…"</li>
+      <li class="good"><strong>Use headings as anchors.</strong> The agent navigates by heading. <code>## When to use</code>, <code>## Procedure</code>, <code>## Examples</code> are easier to follow than long unbroken prose.</li>
+      <li class="good"><strong>Show one full example.</strong> A worked example — input, the actions taken, the output — is worth more than three paragraphs of rules.</li>
+      <li class="good"><strong>Point at sibling files.</strong> "Open <code>templates/release-note.md</code> and fill it in" tells the agent exactly what to read next.</li>
+      <li class="bad"><strong>Avoid hedging.</strong> "You might want to consider possibly checking" becomes "Check." Imperatives win.</li>
+      <li class="bad"><strong>Avoid restating the description.</strong> The agent has already decided to use the skill. Don't spend the body re-pitching it.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">05</span>
+      <span class="lbl">The Tight Loop</span>
+    </div>
+    <h2>Authoring a skill is a <em>loop</em>, not a draft.</h2>
+    <p class="lede">No one writes a working skill in one pass. The honest workflow is short and repetitive.</p>
+
+    <div class="prose">
+      <ol>
+        <li><strong>Draft</strong> the description and the smallest possible body. One procedure, one example.</li>
+        <li><strong>Test</strong> with a prompt you'd expect to fire it. Try at least one prompt you'd expect <em>not</em> to fire it.</li>
+        <li><strong>Read</strong> what the agent did. Did it load the skill? Did it follow the procedure? Did it invent steps you didn't write?</li>
+        <li><strong>Fix</strong> the description if it didn't load. Fix the body if it loaded but went off-script.</li>
+        <li><strong>Repeat</strong> until the false-positives are rare and the false-negatives are zero.</li>
+      </ol>
+      <p>Most new skills die because their authors skip step 2 and never try the "doesn't apply" prompt. A skill that fires on everything is worse than no skill at all — it crowds out the ones that actually fit.</p>
+    </div>
+
+    <div class="pullquote">
+      The author's job isn't to <em>describe</em> the work. It's to make the agent <em>find</em> the skill, <em>follow</em> the steps, and <em>stop</em> when it's done.
+      <cite>— Field note · authoring debrief</cite>
+    </div>
+  </div>
+</section>
+
+<section class="bridge">
+  <div class="container">
+    <div class="bridge-tag">Up next · Part 03</div>
+    <h3>You can write one. Now decide: <em>should it be a skill, or an agent?</em></h3>
+  </div>
+</section>
+
+</main>
+
+<nav class="page-nav" aria-label="Series navigation">
+  <a href="skill-md-part-1.html" class="prev-pill">Prev · What is a skill?</a>
+  <a href="skill-md-part-3.html" class="next-pill">Next · Skill vs Agent</a>
+</nav>
+
+<footer>
+  <div class="colophon">MakeItPretty · A field guide to SKILL.md for new authors · 2026</div>
+</footer>
+
+</body>
+</html>

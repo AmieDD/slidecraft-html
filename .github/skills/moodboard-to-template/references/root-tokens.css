@@ -1,0 +1,79 @@
+/* Sync this block byte-for-byte into both style-guide.html and template.html between <!-- TOKENS:START --> / <!-- TOKENS:END -->. */
+/* Required <head> markup for fonts: */
+/*   <link rel="preconnect" href="https://fonts.googleapis.com"> */
+/*   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> */
+/*   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,700;9..144,400..700&family=JetBrains+Mono:wght@400;700&display=swap"> */
+
+:root {
+  /* color — semantic roles (canonical names; no --color- prefix) */
+  --surface:     #F5EFE6;
+  --surface-alt: #EAE0D2;
+  --ink:         #1B1A17;
+  --ink-muted:   #5C544A;
+  --accent:      #B8431C;
+  --accent-ink:  #FFFFFF;
+  --border:      #D6CBB8;
+  --focus:       #1F6FEB;
+  --code-bg:     #282A36; /* Dracula */
+  --code-ink:    #F8F8F2; /* Dracula */
+
+  /* typography — families (Fraunces for display+body, JetBrains Mono for code) */
+  /* Display + body example: font-variation-settings: "opsz" 144, "SOFT" 100; */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "Fraunces", Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* typography — type scale (modular, ~1.25 ratio) */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+  --text-3xl:  3rem;
+
+  --leading-tight:  1.15;
+  --leading-normal: 1.55;
+  --leading-loose:  1.8;
+  --weight-regular: 400;
+  --weight-bold:    700;
+
+  /* spacing — 8 stops, 4px base, ~1.5× modular ratio with editorial breakpoints (4, 8, 12, 16, 24, 32, 48, 64) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* radius */
+  --radius-sm:   4px;
+  --radius-md:  10px;
+  --radius-lg:  20px;
+
+  /* shadow / elevation */
+  --shadow-sm: 0 1px 2px  rgba(20, 16, 10, 0.08);
+  --shadow-md: 0 6px 18px rgba(20, 16, 10, 0.12);
+  --shadow-lg: 0 20px 50px rgba(20, 16, 10, 0.18);
+
+  /* motion */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 400ms;
+  --ease-standard:    cubic-bezier(.2, .0, .2, 1);
+  --ease-emphasized:  cubic-bezier(.2, .0, 0,  1);
+
+  /* layout */
+  --measure: 68ch;          /* max comfortable line length */
+  --gutter:  var(--space-5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 1ms; --motion-base: 1ms; --motion-slow: 1ms; }
+}
+
+@media print {
+  :root { --surface: #ffffff; --ink: #000000; }
+}

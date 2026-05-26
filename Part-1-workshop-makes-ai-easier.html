@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How a Hypervelocity Workshop Makes AI Easier · Hypervelocity Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,600;1,9..144,800&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<style>
+  /* Page-specific overrides only — never restate global tokens. */
+  :root {
+    --accent: #B5443A;        /* warm brick — workshop / studio energy */
+    --accent-soft: #F1D8D2;
+    --accent-bright: #D86B5E;
+    --accent-deep: #7A2C24;
+  }
+
+  /* Editorial drop-cap on the first lede */
+  .prose > p.lede:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 4.2em;
+    line-height: 0.85;
+    float: left;
+    padding: 0.05em 0.12em 0 0;
+    color: var(--accent);
+  }
+
+  /* Three-column "the kit" grid */
+  .kit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+  }
+  .kit-card {
+    background: var(--bg-card);
+    border-top: 3px solid var(--accent);
+    padding: 22px 22px 24px;
+  }
+  .kit-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+  }
+  .kit-card p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .kit-card .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 14px;
+  }
+  @media (max-width: 800px) {
+    .kit-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Before / After comparison */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin: 28px 0;
+  }
+  .compare > div { padding: 22px 24px; }
+  .compare .before { border-right: 1px solid var(--rule); }
+  .compare .after { background: var(--accent-soft); }
+  .compare h5 {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--ink-soft);
+  }
+  .compare ul { list-style: none; padding: 0; }
+  .compare li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+  .compare .before li::before {
+    content: "·";
+    position: absolute; left: 4px;
+    color: var(--ink-faint);
+  }
+  .compare .after li::before {
+    content: "→";
+    position: absolute; left: 0;
+    color: var(--accent-deep);
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+  @media (max-width: 700px) {
+    .compare { grid-template-columns: 1fr; }
+    .compare .before { border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+
+  /* RPI loop — three numbered stages */
+  .loop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+    counter-reset: stage;
+  }
+  .stage {
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    counter-increment: stage;
+  }
+  .stage::before {
+    content: counter(stage, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+  }
+  .stage h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 6px 0 10px;
+  }
+  .stage h4 em { color: var(--accent); font-style: italic; }
+  .stage p { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.55; }
+  @media (max-width: 800px) {
+    .loop { grid-template-columns: 1fr; }
+  }
+
+  .pullquote {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.65rem;
+    line-height: 1.35;
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 22px;
+    margin: 32px 0;
+    color: var(--ink);
+    max-width: 38em;
+  }
+  .pullquote cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="masthead">
+  <div>Hypervelocity Engineering · Workshop Notes</div>
+  <div class="vol">No. 01</div>
+  <div>2026</div>
+</div>
+
+<main id="main">
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="part-tag">Part 01 · The Workshop</div>
+        <h1>How a one-day workshop makes programming with AI <em>actually easier</em>.</h1>
+      </div>
+      <div class="hero-meta">
+        <div class="label">In this part</div>
+        <p>What changes when a team stops prompting and starts shipping. A field tour of the HVE&nbsp;Core kit — agents, skills, instructions, and the Research&nbsp;→&nbsp;Plan&nbsp;→&nbsp;Implement loop — and what it does to your Monday.</p>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <p class="deck">Most teams treat AI like a clever intern with a long attention span. <em>A workshop turns it into a kit</em> — a set of agents, skills, and rules your repo already knows how to use.</p>
+      <p class="byline">Field notes · Hypervelocity Engineering · 2026</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">01</span>
+      <span class="lbl">The Problem</span>
+    </div>
+    <h2>AI without scaffolding is <em>improv</em>.</h2>
+    <div class="prose">
+      <p class="lede">Pasting a prompt into a chat window gets you <em>something</em>. It rarely gets you something your team can ship — something that matches the repo's conventions, respects the security boundaries, names variables the way the rest of the codebase does, and survives Monday's code review.</p>
+      <p>The default failure mode is not that the model is wrong. It's that the model is <em>uncalibrated</em>. It doesn't know which folder your tests live in, which auth pattern your tenant approved, which agent on your team owns the deploy, or that your <code>handler.ts</code> already has three helpers that do almost-what-it-just-invented.</p>
+      <p>A workshop's job is to close that gap in a day. Not by training a new model — by giving the existing one a kit.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">02</span>
+      <span class="lbl">The Kit</span>
+    </div>
+    <h2>Four pieces, taught in order: <em>agents, skills, instructions, templates</em>.</h2>
+    <p class="lede">These are the primitives <a href="https://microsoft.github.io/hve-core/">HVE Core</a> ships and the ones the workshop drills. Each one is small. Together they replace the "long prompt and a vibe" with named, reusable scaffolding.</p>
+
+    <div class="kit-grid">
+      <div class="kit-card">
+        <div class="tag">Agents</div>
+        <h4>Specialists you summon.</h4>
+        <p>Pre-configured roles — Researcher, Planner, Implementor, Reviewer — that you call by name. Each one has a narrow job and a known output shape, so the next agent in the chain knows exactly what it's reading.</p>
+      </div>
+      <div class="kit-card">
+        <div class="tag">Skills</div>
+        <h4>Knowledge, packaged.</h4>
+        <p>A skill is a folder of domain expertise — a SKILL.md, a few assets, sometimes a script. When a request matches, the agent loads it on demand. You stop pasting the same context into every conversation.</p>
+      </div>
+      <div class="kit-card">
+        <div class="tag">Instructions</div>
+        <h4>Rules the repo enforces.</h4>
+        <p>An <code>.instructions.md</code> file with an <code>applyTo</code> glob. When the model touches a matching file, those rules load automatically. "Use uv for Python," "no <code>--no-verify</code>," "C# tests use xUnit" — written once, applied every time.</p>
+      </div>
+      <div class="kit-card">
+        <div class="tag">Templates</div>
+        <h4>Reusable patterns.</h4>
+        <p>Pre-built scaffolds for the work you do over and over — a new ADR, a PR description, a security review, a sprint plan. The team learns one shape and uses it everywhere.</p>
+      </div>
+      <div class="kit-card">
+        <div class="tag">Collections</div>
+        <h4>Domain bundles.</h4>
+        <p>Pre-curated groups — <code>coding-standards</code>, <code>data-science</code>, <code>security</code>, <code>github</code>, <code>ado</code>. Install the collection your team needs; skip the ones you don't. The workshop helps you pick.</p>
+      </div>
+      <div class="kit-card">
+        <div class="tag">Prompts</div>
+        <h4>Verbs, not essays.</h4>
+        <p>A <code>.prompt.md</code> file becomes a slash-command. "Triage this issue," "review this branch," "draft a PR description." Reusable, parameterized, and version-controlled next to the code they touch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">03</span>
+      <span class="lbl">The Loop</span>
+    </div>
+    <h2>The workshop teaches one loop: <em>research, plan, implement</em>.</h2>
+    <p class="lede">RPI is the spine of an HVE workflow. Three agents, three artifacts, one human editor — you. The model doesn't decide what to build; it drafts the steps so you can correct course before any code is written.</p>
+
+    <div class="loop">
+      <div class="stage">
+        <h4><em>Research</em> the territory.</h4>
+        <p>The Researcher subagent reads the codebase, the docs, the relevant skills, and any links you drop in. It produces a research note — what exists, what's missing, what's risky — instead of jumping to code.</p>
+      </div>
+      <div class="stage">
+        <h4><em>Plan</em> the change.</h4>
+        <p>The Planner turns the research note into a phased plan with acceptance criteria. You read it like a PR description that hasn't been written yet, push back on it, and only approve when the shape is right.</p>
+      </div>
+      <div class="stage">
+        <h4><em>Implement</em> with a budget.</h4>
+        <p>The Phase Implementor executes one phase at a time, with the plan as its contract. A separate Validator checks the diff against the plan. Drift is caught early, not at review.</p>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      The shift isn't that AI writes more code. It's that <em>you stop being surprised</em> by the code it writes.
+      <cite>— Workshop debrief, day one</cite>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">04</span>
+      <span class="lbl">What Changes Monday</span>
+    </div>
+    <h2>Before and after the kit lands in the repo.</h2>
+    <p class="lede">The workshop's deliverable isn't a slide deck. It's a <code>.github/</code> folder, a handful of skills, and a team that knows when to reach for which one. The change is visible in the next sprint.</p>
+
+    <div class="compare">
+      <div class="before">
+        <h5>Before the workshop</h5>
+        <ul>
+          <li>Every prompt re-explains the codebase from scratch.</li>
+          <li>Two engineers ask the same question and get two answers.</li>
+          <li>The model invents a helper that already exists three folders over.</li>
+          <li>"Did the AI write this?" is a question reviewers ask.</li>
+          <li>Security review is a discovery process at the end.</li>
+          <li>Convention drift; no two PRs look alike.</li>
+        </ul>
+      </div>
+      <div class="after">
+        <h5>After the workshop</h5>
+        <ul>
+          <li>Instructions load automatically when the right files are touched.</li>
+          <li>The Researcher cites the file and line before any code is drafted.</li>
+          <li>Skills surface the existing helper instead of inventing a new one.</li>
+          <li>The plan exists in the repo before the diff does.</li>
+          <li>The Security Planner runs as a phase, not as an afterthought.</li>
+          <li>PRs look like each other because the templates wrote them.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>None of this requires a new model, a new IDE, or a new license. It requires writing down what your team already knows, and letting the agent system load it on demand.</p>
+  </div>
+</section>
+
+<section class="bridge">
+  <div class="container">
+    <div class="bridge-tag">Closing · The takeaway</div>
+    <h3>AI stops <em>guessing</em> at your repo. It starts <em>working in it</em>.</h3>
+  </div>
+</section>
+
+</main>
+
+<nav class="page-nav" aria-label="Series navigation">
+  <a href="#" class="prev-pill" aria-disabled="true">Prev · (first part)</a>
+  <a href="#" class="next-pill" aria-disabled="true">Next · (coming soon)</a>
+</nav>
+
+<footer>
+  <div class="colophon">Hypervelocity Engineering · Field notes on AI-assisted development · <a href="https://microsoft.github.io/hve-core/">microsoft.github.io/hve-core</a></div>
+</footer>
+
+</body>
+</html>
