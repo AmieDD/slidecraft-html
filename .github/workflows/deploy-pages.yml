@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "example-generated-html/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -27,10 +28,16 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Stage site (docs + examples)
+        run: |
+          mkdir -p _site
+          cp -R docs/. _site/
+          cp -R example-generated-html _site/examples
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: _site
 
   deploy:
     needs: build
