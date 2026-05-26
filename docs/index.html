@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide Craft HTML · How to use this repo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,800;1,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f3f0e8;
+      --ink: #111111;
+      --ink-soft: #4a4a4a;
+      --accent: #2a8a8a;
+      --rule: #d8d3c4;
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      /* Dracula palette — code surfaces only */
+      --dracula-bg: #282A36;
+      --dracula-current-line: #44475A;
+      --dracula-fg: #F8F8F2;
+      --dracula-comment: #6272A4;
+      --dracula-pink: #FF79C6;
+      --dracula-cyan: #8BE9FD;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 40px; }
+    h1 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      margin-top: 16px;
+    }
+    h1 em { font-style: italic; font-weight: 400; }
+    h2 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      line-height: 1.15;
+      margin-top: 12px;
+    }
+    h3 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      margin-top: 8px;
+    }
+    p { margin-top: 14px; max-width: 65ch; color: var(--ink); }
+    p.hint {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    .eyebrow {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .lede {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--ink-soft);
+      max-width: 60ch;
+      margin-top: 24px;
+    }
+    .step { padding: 56px 0; border-top: 1px solid var(--rule); }
+    .step-num {
+      font-family: var(--serif);
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    pre, code {
+      font-family: var(--mono);
+      background: var(--dracula-bg);
+      color: var(--dracula-fg);
+      border-radius: 4px;
+    }
+    code { padding: 2px 6px; font-size: 0.9em; color: var(--dracula-pink); }
+    pre {
+      padding: 18px 22px;
+      overflow-x: auto;
+      margin-top: 16px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    pre code { background: transparent; padding: 0; color: var(--dracula-fg); }
+    pre::selection, pre *::selection {
+      background: var(--dracula-current-line);
+      color: var(--dracula-fg);
+    }
+    .paths {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .path {
+      border: 1px solid var(--rule);
+      padding: 28px;
+      background: #fff;
+      min-width: 0;
+    }
+    .path img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 16px;
+      border: 1px solid var(--rule);
+    }
+    .hint-img {
+      display: block;
+      max-width: 380px;
+      width: 100%;
+      height: auto;
+      margin-top: 12px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+    }
+    .hint-toggle {
+      margin-top: 10px;
+    }
+    .hint-toggle > summary {
+      display: inline-block;
+      list-style: none;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding: 2px 0;
+    }
+    .hint-toggle > summary::-webkit-details-marker { display: none; }
+    .hint-toggle > summary::before {
+      content: "▸ ";
+      display: inline-block;
+      transition: transform 120ms ease;
+    }
+    .hint-toggle[open] > summary::before {
+      content: "▾ ";
+    }
+    .hint-toggle[open] > .hint-img {
+      margin-top: 12px;
+    }
+    .examples-toggle { margin: 0; }
+    .examples-toggle > .examples-list {
+      list-style: none;
+      padding: 12px 0 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      max-width: 480px;
+    }
+    .examples-list li {
+      display: grid;
+      gap: 2px;
+      padding: 10px 14px;
+      border: 1px solid var(--rule);
+      background: #fff;
+    }
+    .examples-list a {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent);
+    }
+    .examples-list span {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+      align-items: center;
+    }
+    .cta-primary,
+    .cta-secondary {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-primary {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 14px 22px;
+      border-radius: 2px;
+    }
+    .cta-primary:hover { background: var(--accent); }
+    .cta-secondary {
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding: 4px 2px;
+    }
+    .faq h3 { margin-top: 32px; }
+    footer {
+      margin-top: 72px;
+      padding: 40px 0;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.04em;
+    }
+    footer p { margin-top: 8px; color: var(--ink-soft); }
+    footer a { color: var(--accent); }
+    @media (max-width: 760px) {
+      .wrap { padding: 40px 22px; }
+      .paths { grid-template-columns: 1fr; }
+      .cta-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">— How to use this repo</p>
+    <h1>Make a page <em>that looks like you</em>.</h1>
+    <p class="lede">A folder of VS Code Copilot skills that turn a mood board, or just a sentence, into a styled HTML presentation page.</p>
+    <div class="cta-row">
+      <a class="cta-primary" href="https://github.com/AmieDD/slidecraft-html/tree/main/.github/skills">Copy the skills</a>
+      <details class="hint-toggle examples-toggle">
+        <summary>See examples</summary>
+        <ul class="examples-list">
+          <li>
+            <a href="../example-generated-html/skill-md-part-1.html">Default layout &amp; font</a>
+            <span>Editorial theme used when no mood board is supplied.</span>
+          </li>
+          <li>
+            <a href="../example-generated-html/skill-md-for-new-users.html">From a moodboard</a>
+            <span>Look and feel extracted from reference images.</span>
+          </li>
+        </ul>
+      </details>
+    </div>
+
+    <section class="step" id="install">
+      <p class="step-num">01 · install</p>
+      <h2>Copy the skills folder into your own repo.</h2>
+      <p>In your own repo, create <code>.github/skills/</code> if it doesn't exist, then copy the three skill folders from this repo into it.</p>
+      <pre>your-repo/
+└── .github/
+    └── skills/
+        ├── moodboard-to-html/
+        ├── moodboard-to-template/
+        └── zine-page/</pre>
+    </section>
+
+    <section class="step">
+      <p class="step-num">02 · open chat</p>
+      <h2>Open GitHub Copilot Chat in VS Code.</h2>
+      <p>Click the Copilot icon in the VS Code title bar, or press <code>Ctrl+Alt+I</code> on Windows / Linux (<code>Cmd+Ctrl+I</code> on macOS). The Chat panel opens on the right.</p>
+      <p>Copilot auto-discovers skills under <code>.github/skills/</code>. No install command. No restart.</p>
+      <details class="hint-toggle">
+        <summary>Don't see the Copilot Icon?</summary>
+        <p class="hint">If you don't see a Copilot icon, install the GitHub Copilot Chat extension from the Extensions view first.</p>
+        <img class="hint-img" src="./assets/github-copilot-extension.png" alt="GitHub Copilot Chat extension card in the VS Code Extensions view, showing the GitHub Copilot Chat name, description, and Verified GitHub publisher badge.">
+      </details>
+    </section>
+
+    <section class="step">
+      <p class="step-num">03 · choose a path</p>
+      <h2>Pick the path that matches what you've got.</h2>
+      <div class="paths">
+        <article class="path">
+          <p class="eyebrow">Path A · with mood board</p>
+          <h3>Drop in images + write a prompt.</h3>
+          <p>Attach 1–5 reference images (inspiration posters, screenshots, swatches). Then ask:</p>
+          <pre>Use the moodboard-to-html skill to
+turn these images into an HTML presentation
+about how to build cute custom PCB designs.</pre>
+          <img src="./assets/moodboard-example.png" alt="Mood board collage example — bold editorial, kawaii, and cyber references">
+        </article>
+        <article class="path">
+          <p class="eyebrow">Path B · no mood board</p>
+          <h3>Just describe what you want.</h3>
+          <p>No images needed — the skill falls back to a default editorial theme:</p>
+          <pre>Create a presentation
+guide to teach what
+a Skill is for new users.</pre>
+          <img src="./assets/default-theme-example.png" alt="Default editorial theme example — warm paper, serif headlines, teal accent">
+        </article>
+      </div>
+    </section>
+
+    <section class="step">
+      <p class="step-num">04 · output</p>
+      <h2>Where the file lands.</h2>
+      <p>The skill writes a single self-contained HTML file with CSS inline. Open it in a browser to preview, or commit it to your repo and publish it with GitHub Pages — no build step required.</p>
+    </section>
+
+    <section class="step faq">
+      <p class="step-num">faq · troubleshooting</p>
+      <h2>Common questions.</h2>
+      <h3>Copilot doesn't see my skill — what now?</h3>
+      <p>Double-check the path is exactly <code>.github/skills/&lt;skill-name&gt;/SKILL.md</code>. If it still isn't picked up, reload the VS Code window (<code>Ctrl+Shift+P</code> → <em>Developer: Reload Window</em>).</p>
+      <h3>Which Copilot model should I use?</h3>
+      <p>Any current GitHub Copilot Chat model works. For Path A, pick a model with vision support — image-aware models give noticeably better mood-board results. Recommended options include Anthropic Opus 4.6 or 4.7, or OpenAI GPT-5.4 or GPT-5.5.</p>
+      <h3>Can I edit the output?</h3>
+      <p>Yes. The output is plain HTML with inline CSS — edit it like any other file, or ask Copilot to iterate on it.</p>
+    </section>
+
+    <footer>
+      <p>Slide Craft HTML · <a href="https://github.com/AmieDD/slidecraft-html">github.com/AmieDD/slidecraft-html</a></p>
+      <p>Example mood board reference images on this page were provided by the repo author and are intended for inspiration only.</p>
+    </footer>
+  </main>
+</body>
+</html>

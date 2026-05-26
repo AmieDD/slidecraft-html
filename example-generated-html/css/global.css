@@ -1,11 +1,11 @@
 /* ═══════════════════════════════════════════════════════
-   MakeItPretty — Global Styles
+   Slide Craft HTML
    Editorial zine shell. Per-page styles override --accent
    and add page-specific layouts inline; never restate tokens.
    ═══════════════════════════════════════════════════════ */
 
 :root {
-  /* Core palette — warm magazine paper */
+  /* Core palette — warm colors like magazine paper */
   --bg: #F4EFE6;
   --bg-card: #FBF7EE;
   --ink: #1A1614;

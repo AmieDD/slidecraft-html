@@ -58,7 +58,7 @@ The skill reads `zine.config.json` (or accepts these as runtime inputs) to know 
     "mono": "JetBrains Mono",
     "extras": ["Caveat", "Permanent Marker"]
   },
-  "footerLine": "Synthetic demo repo · FirstStreet Savings & Loan",
+  "footerLine": "Demo repo · FirstStreet Savings & Loan",
   "useItalicEmAccent": true,
   "archetypes": ["editorial", "noir-wall", "themed-scene", "visual-diagram"]
 }
