@@ -104,6 +104,152 @@
     .yesno { grid-template-columns: 1fr; }
     .yesno .yes { border-right: none; border-bottom: 1px solid var(--rule); }
   }
+  /* Section 05 — interactive context-window demo */
+  .ctx-demo { margin-top: 28px; border: 1px solid var(--rule); background: var(--bg-card); }
+  .ctx-prompt { display: flex; gap: 16px; align-items: baseline; padding: 18px 22px; border-bottom: 1px solid var(--rule); }
+  .ctx-prompt-label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+  .ctx-prompt-text { font-family: var(--display); font-style: italic; font-size: 1.15rem; color: var(--ink); }
+  .ctx-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+  .ctx-tab { appearance: none; background: transparent; border: 0; padding: 14px 18px; cursor: pointer; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 3px solid transparent; transition: color .15s, border-color .15s, background .15s; }
+  .ctx-tab + .ctx-tab { border-left: 1px solid var(--rule); }
+  .ctx-tab:hover { color: var(--ink); }
+  .ctx-tab[aria-selected="true"] { color: var(--accent-deep); border-bottom-color: var(--accent); background: var(--accent-soft); }
+  .ctx-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .ctx-panel { padding: 22px 24px 26px; }
+  .ctx-panel[hidden] { display: none; }
+  .ctx-meta { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 12px; }
+  .ctx-meta strong { color: var(--accent-deep); font-weight: 600; }
+  .ctx-meta-note { color: var(--ink-faint); }
+  .ctx-window { font-family: var(--mono); font-size: 0.86rem; line-height: 1.55; background: var(--ink); color: var(--bg); padding: 16px 18px; overflow-x: auto; white-space: pre; }
+  .ctx-tok { color: var(--accent-soft); font-weight: 600; margin-right: 6px; }
+  .ctx-tok.skill { color: var(--highlight); }
+  .ctx-window .red-hl { color: #E08070; }
+  .ctx-window .yellow-hl { color: var(--highlight); }
+  .ctx-note { margin-top: 14px; font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
+  .ctx-note em { color: var(--accent-deep); font-style: italic; }
+  @media (max-width: 600px) {
+    .ctx-prompt { flex-direction: column; gap: 4px; }
+    .ctx-tabs { grid-template-columns: 1fr; }
+    .ctx-tab + .ctx-tab { border-left: 0; border-top: 1px solid var(--rule); }
+  }
+
+  /* Section 06 — "wake up" animation: messages drift past a sleeping skill */
+  .wake {
+    margin-top: 28px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    padding: 40px 28px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wake-stream {
+    position: relative;
+    height: 44px;
+    margin-bottom: 36px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .wake-stream .msg {
+    position: absolute;
+    top: 6px;
+    left: 100%;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 4px 10px;
+    white-space: nowrap;
+    animation: wake-drift 16s linear infinite;
+  }
+  .wake-stream .msg:nth-child(1) { animation-delay:  0s; }
+  .wake-stream .msg:nth-child(2) { animation-delay:  3s; }
+  .wake-stream .msg:nth-child(3) { animation-delay:  6s; } /* the match */
+  .wake-stream .msg:nth-child(4) { animation-delay:  9s; }
+  .wake-stream .msg:nth-child(5) { animation-delay: 12s; }
+
+  .wake-stream .msg.match {
+    background: var(--highlight);
+    color: var(--ink);
+    border-color: var(--accent-deep);
+    font-weight: 600;
+  }
+
+  @keyframes wake-drift {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-140vw); }
+  }
+
+  .wake-folder {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+    animation: wake-open 16s ease-in-out infinite;
+    animation-delay: 6s;
+  }
+  .folder-tab {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    border-bottom: 1px solid var(--rule);
+  }
+  .folder-body {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 16px;
+    animation: wake-reveal 16s ease-in-out infinite;
+    animation-delay: 6s;
+  }
+  .folder-line {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    color: var(--ink);
+    padding: 6px 0;
+  }
+
+  @keyframes wake-open {
+    0%, 35%   { box-shadow: none; border-color: var(--rule); }
+    40%, 70%  { box-shadow: 0 0 0 3px var(--highlight); border-color: var(--accent-deep); }
+    85%, 100% { box-shadow: none; border-color: var(--rule); }
+  }
+  @keyframes wake-reveal {
+    0%, 35%   { max-height: 0; padding-top: 0; padding-bottom: 0; }
+    45%, 70%  { max-height: 200px; padding-top: 10px; padding-bottom: 14px; }
+    85%, 100% { max-height: 0; padding-top: 0; padding-bottom: 0; }
+  }
+
+  .wake-legend {
+    margin-top: 28px;
+    text-align: center;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 38em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .wake-legend em { color: var(--accent-deep); font-style: italic; }
+
+  /* Reduced-motion fallback: show the open-and-matched end state,
+     not a frozen "asleep" view that would teach the wrong thing. */
+  @media (prefers-reduced-motion: reduce) {
+    .wake-stream .msg { position: static; display: inline-block; margin: 4px 8px 0 0; }
+    .wake-stream { height: auto; padding-bottom: 14px; }
+    .wake-folder { box-shadow: 0 0 0 3px var(--highlight); border-color: var(--accent-deep); }
+    .folder-body { max-height: none; padding: 10px 16px 14px; }
+  }
+
+  @media (max-width: 600px) {
+    .wake { padding: 28px 18px 24px; }
+    .wake-stream .msg { font-size: 0.78rem; }
+  }
 </style>
 </head>
 <body>
@@ -261,6 +407,84 @@ sentences, and we never use the word "leverage."
   </div>
 </section>
 
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">05</span>
+      <span class="lbl">See It In Action</span>
+    </div>
+    <h2>Watch what the agent <em>actually loads</em>.</h2>
+    <p class="lede">Same user request. One repo without a skill, one repo with. Tap a tab to see what the agent's context window looks like the moment it reads your message.</p>
+
+    <div class="ctx-demo" data-active="without">
+      <div class="ctx-prompt">
+        <span class="ctx-prompt-label">Your message</span>
+        <span class="ctx-prompt-text">"Write a release note for v2.4."</span>
+      </div>
+
+      <div class="ctx-tabs" role="tablist" aria-label="Agent context">
+        <button class="ctx-tab" role="tab" aria-selected="true"  data-target="without" id="t-without">Without a skill</button>
+        <button class="ctx-tab" role="tab" aria-selected="false" data-target="with"    id="t-with"   >With the brand-voice skill</button>
+      </div>
+
+      <div class="ctx-panels">
+        <div class="ctx-panel" role="tabpanel" aria-labelledby="t-without" data-name="without">
+          <div class="ctx-meta">Tokens loaded into context: <strong>~120</strong></div>
+          <pre class="ctx-window"><span class="ctx-tok user">[user]</span> Write a release note for v2.4.</pre>
+          <p class="ctx-note">The agent has nothing to lean on. It guesses your voice, your format, the words you'd never ship. You correct it. Three turns later you give up and write it yourself.</p>
+        </div>
+        <div class="ctx-panel" role="tabpanel" aria-labelledby="t-with" data-name="with" hidden>
+          <div class="ctx-meta">Tokens loaded into context: <strong>~480</strong> <span class="ctx-meta-note">(skill body loaded because the request matched <code>description</code>)</span></div>
+          <pre class="ctx-window"><span class="ctx-tok user">[user]</span> Write a release note for v2.4.
+<span class="ctx-tok skill">[skill: brand-voice]</span>
+We write in <span class="red-hl">first person plural</span>, in short
+sentences, and we never use the word "leverage."
+<span class="yellow-hl">## Rules</span>
+1. Verbs over nouns.
+2. Cut every adverb.
+3. No em-dashes in product copy.</pre>
+          <p class="ctx-note">The agent loaded the skill body <em>only because your message matched the description</em>. On every other turn this folder stays asleep.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="num">06</span>
+      <span class="lbl">How It Wakes Up</span>
+    </div>
+    <h2>The folder stays <em>asleep</em> until your words match.</h2>
+    <p class="lede">Watch what "lazy" looks like. Messages drift past a dormant skill folder. Only when one matches the <code>description</code> does the folder open and pour its body into the agent's context.</p>
+
+    <div class="wake" role="img" aria-label="Animation: a stream of user messages drifts past a sleeping skill folder; a matching message lights up the folder, which opens and releases its body content into the agent context.">
+      <div class="wake-stream" aria-hidden="true">
+        <span class="msg">"fix this null check"</span>
+        <span class="msg">"rename this variable"</span>
+        <span class="msg match">"write a release note"</span>
+        <span class="msg">"add a unit test"</span>
+        <span class="msg">"summarize this PR"</span>
+      </div>
+
+      <div class="wake-folder">
+        <div class="folder-tab">SKILL.md · brand-voice</div>
+        <div class="folder-body">
+          <p class="folder-line">verbs over nouns</p>
+          <p class="folder-line">cut every adverb</p>
+          <p class="folder-line">no em-dashes in product copy</p>
+        </div>
+      </div>
+
+      <p class="wake-legend">
+        Most messages pass by untouched. The one that matches the skill's
+        <em>description</em> is the one that opens it.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="bridge">
   <div class="container">
     <div class="bridge-tag">Up next · Part 02</div>
@@ -278,6 +502,32 @@ sentences, and we never use the word "leverage."
 <footer>
   <div class="colophon">Slide Craft HTML · A field guide to SKILL.md for new authors · 2026</div>
 </footer>
+
+<script>
+(function () {
+  const demo = document.querySelector('.ctx-demo');
+  if (!demo) return;
+  const tabs = Array.from(demo.querySelectorAll('.ctx-tab'));
+  const panels = Array.from(demo.querySelectorAll('.ctx-panel'));
+
+  function activate(name) {
+    demo.dataset.active = name;
+    tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.target === name));
+    panels.forEach(p => { p.hidden = p.dataset.name !== name; });
+  }
+
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => activate(t.dataset.target));
+    t.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+        next.focus(); activate(next.dataset.target);
+      }
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

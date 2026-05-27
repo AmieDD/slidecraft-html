@@ -54,7 +54,7 @@ The skill reads `zine.config.json` (or accepts these as runtime inputs) to know 
   "fileLocation": ".",
   "fonts": {
     "display": "Fraunces",
-    "body": "Inter Tight",
+    "body": "Fraunces",
     "mono": "JetBrains Mono",
     "extras": ["Caveat", "Permanent Marker"]
   },
@@ -84,7 +84,16 @@ Ask the user one question:
 Copy `assets/default-global.css` from this skill folder to the configured stylesheet path (default `css/global.css`). The bundled default ships with:
 
 - **Palette**: warm cream paper (`#F4EFE6`), deep ink (`#1A1614`), editorial navy accent (`#1A2E4A`), with a mustard `--highlight` (`#F5C842`) for emphasis blocks.
-- **Fonts**: Fraunces (display), Inter Tight (body), JetBrains Mono (code) — loaded inline via `@import`, so no `<link>` tags needed in pages.
+- **Fonts**: Fraunces (display and body), JetBrains Mono (code), loaded inline via `@import`, so no `<link>` tags needed in pages. Inter Tight remains a recommended sans alternative; swap it into `--body` to soften long-form reading. Headings `h1` and `h2` pin Fraunces' `opsz` axis to `144`, and their italic `<em>` accents also pull the `SOFT` axis to `100`, so any per-page heading override must preserve those `font-variation-settings`.
+  - **Performance mode (optional)**: `@import` adds one extra serial round-trip to first paint because the browser's preload scanner cannot see CSS-embedded URLs. The `&display=swap` parameter keeps text visible during that window, so the page is never blank. If you need faster font arrival, delete the `@import` line from `default-global.css` and add this to your page template's `<head>` instead:
+
+    ```html
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+    ```
+
+    The CSS will continue to consume the families through `var(--display)`, `var(--body)`, and `var(--mono)`.
 - **Shell**: all canonical classes (`.masthead`, `.hero`, `.bridge`, `.page-nav`, `.prev-pill`, `.next-pill`, etc.) wired and ready.
 
 Tell the user where it landed and that they can edit `:root` tokens any time to re-skin the whole series — or run Step 0 again with Path (b) to derive a custom palette from images.
