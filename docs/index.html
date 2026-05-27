@@ -6,7 +6,7 @@
   <title>Slide Craft HTML · How to use this repo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,800;1,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400,0..100;0,9..144,800,0..100;1,9..144,400,0..100&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #f3f0e8;
@@ -41,8 +41,13 @@
       font-size: clamp(2.4rem, 5vw, 4.4rem);
       line-height: 1.05;
       margin-top: 16px;
+      font-variation-settings: "opsz" 144;
     }
-    h1 em { font-style: italic; font-weight: 400; }
+    h1 em {
+      font-style: italic;
+      font-weight: 400;
+      font-variation-settings: "opsz" 144, "SOFT" 100;
+    }
     h2 {
       font-family: var(--serif);
       font-weight: 800;
@@ -228,6 +233,239 @@
     }
     footer p { margin-top: 8px; color: var(--ink-soft); }
     footer a { color: var(--accent); }
+    /* Capability grid */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .cap {
+      border: 1px solid var(--rule);
+      background: #fff;
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .cap-eyebrow {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    .cap h3 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: 1.15rem;
+      line-height: 1.2;
+      margin: 0 0 8px;
+    }
+    .cap p {
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      margin: 0 0 16px;
+      max-width: none;
+    }
+    .cap-preview { margin-top: auto; }
+    /* Per-capability preview styles */
+    .cap-archetypes { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cap-archetypes span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 4px 8px;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+    }
+    .cap-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+    }
+    .cap-shell li {
+      padding: 6px 8px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      text-align: center;
+      background: var(--bg);
+    }
+    .cap-type { display: grid; gap: 4px; }
+    .cap-type span { font-size: 0.95rem; color: var(--ink); }
+    .cap-pullquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink);
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      margin: 0;
+    }
+    .cap-swatches {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      height: 32px;
+      border: 1px solid var(--rule);
+    }
+    .cap-swatches span { display: block; }
+    .cap-code {
+      margin-top: auto;
+      font-size: 0.78rem;
+      padding: 12px 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 9.5rem;
+      overflow: hidden;
+    }
+    .cap-code.is-typing::after {
+      content: "▌";
+      display: inline-block;
+      color: var(--dracula-fg);
+      margin-left: 1px;
+      animation: cap-caret-blink 1s steps(2, end) infinite;
+    }
+    @keyframes cap-caret-blink {
+      to { visibility: hidden; }
+    }
+    .cap-code .kw { color: #ff79c6; }
+    .cap-code .str { color: #f1fa8c; }
+    .cap-code .cm { color: #6272a4; }
+    .cap-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 10px;
+    }
+    .cap-copy {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: #fff;
+      border: 1px solid var(--accent);
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease;
+    }
+    .cap-copy:hover,
+    .cap-copy:focus-visible {
+      background: var(--accent);
+      color: #fff;
+      outline: none;
+    }
+    .cap-copy:focus-visible {
+      box-shadow: 0 0 0 3px rgba(42, 138, 138, 0.35);
+    }
+    .cap-copy-status {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+    }
+    .cap-tabs { display: flex; gap: 0; border: 1px solid var(--rule); }
+    .cap-tabs button {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      background: #fff;
+      border: 0;
+      border-right: 1px solid var(--rule);
+      cursor: default;
+      color: var(--ink-soft);
+    }
+    .cap-tabs button:last-child { border-right: 0; }
+    .cap-tabs button[aria-selected="true"] {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .cap-motion { display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+    .cap-bars { display: flex; gap: 10px; align-items: flex-end; justify-content: center; height: 56px; }
+    .cap-bars span {
+      display: block;
+      width: 10px; height: 20px;
+      background: var(--accent);
+      animation: cap-bounce 1.4s ease-in-out infinite;
+    }
+    .cap-bars span:nth-child(2) { animation-delay: 0.15s; }
+    .cap-bars span:nth-child(3) { animation-delay: 0.3s; }
+    .cap-line { width: 100%; height: 96px; overflow: visible; }
+    .cap-line-axis { stroke: var(--rule); stroke-width: 1; }
+    .cap-line-path {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      animation: cap-line-draw 2.8s ease-in-out infinite;
+    }
+    .cap-line-dot {
+      fill: var(--accent);
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: cap-line-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes cap-bounce {
+      0%, 100% { transform: translateY(0); height: 20px; }
+      50%      { transform: translateY(-6px); height: 28px; }
+    }
+    @keyframes cap-line-draw {
+      0%       { stroke-dashoffset: 160; }
+      55%, 90% { stroke-dashoffset: 0; }
+      100%     { stroke-dashoffset: 160; }
+    }
+    @keyframes cap-line-pulse {
+      0%, 50% { opacity: 0; transform: scale(0.6); }
+      60%     { opacity: 1; transform: scale(1.4); }
+      75%     { opacity: 1; transform: scale(1); }
+      90%     { opacity: 1; transform: scale(1); }
+      100%    { opacity: 0; transform: scale(0.6); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cap-bars span,
+      .cap-line-path,
+      .cap-line-dot { animation: none; }
+      .cap-line-path { stroke-dashoffset: 0; }
+      .cap-code.is-typing::after { animation: none; visibility: hidden; }
+    }
+    .cap-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: grid; gap: 4px;
+    }
+    .cap-list li {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--ink);
+      padding-left: 16px;
+      position: relative;
+    }
+    .cap-list li::before {
+      content: "✓";
+      color: var(--accent);
+      position: absolute; left: 0;
+      font-weight: 700;
+    }
+    @media (max-width: 1020px) {
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .cap-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 760px) {
       .wrap { padding: 40px 22px; }
       .paths { grid-template-columns: 1fr; }
@@ -312,6 +550,129 @@ a Skill is for new users.</pre>
       <p>The skill writes a single self-contained HTML file with CSS inline. Open it in a browser to preview, or commit it to your repo and publish it with GitHub Pages — no build step required.</p>
     </section>
 
+    <section class="step" id="capabilities">
+      <p class="step-num">05 · what it can do</p>
+      <h2>Eight things the skills handle <em>automatically</em>.</h2>
+      <p class="lede">You bring the words. The skills handle the look, the rhythm, and the things that are easy to forget.</p>
+
+      <div class="cap-grid">
+
+        <article class="cap">
+          <p class="cap-eyebrow">01 · layout</p>
+          <h3>One canonical page shell.</h3>
+          <p>Every page is masthead → hero with one <code>h1</code> → body sections with <code>h2</code> → prev/next pills → footer.</p>
+          <ol class="cap-preview cap-shell" aria-hidden="true">
+            <li>Masthead</li>
+            <li>Hero (h1)</li>
+            <li>Body sections (h2)</li>
+            <li>Page-nav (prev/next)</li>
+            <li>Footer</li>
+          </ol>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">02 · font</p>
+          <h3>Display + body + mono.</h3>
+          <p>One Google Fonts triplet, declared once, loaded on every page.</p>
+          <div class="cap-preview cap-type">
+            <span style="font-family: var(--serif); font-weight: 800;">Display</span>
+            <span style="font-family: var(--sans);">Body copy that reads.</span>
+            <span style="font-family: var(--mono);">mono · 0123</span>
+          </div>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">03 · style</p>
+          <h3>Editorial accents.</h3>
+          <p>Italic <em>em</em> emphasis in headlines, pullquotes, lede paragraphs, a consistent masthead-to-footer rhythm.</p>
+          <blockquote class="cap-preview cap-pullquote">“The skill is the folder.”</blockquote>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">04 · color palette</p>
+          <h3>Bring your own, or use the default.</h3>
+          <p>Bundled cream + navy + mustard, derived from your reference images, or hand-rolled — chosen once in Step 0.</p>
+          <div class="cap-preview cap-swatches" aria-hidden="true">
+            <span style="background:#f3f0e8;"></span>
+            <span style="background:#111111;"></span>
+            <span style="background:#2a8a8a;"></span>
+            <span style="background:#d8d3c4;"></span>
+            <span style="background:#FF79C6;"></span>
+            <span style="background:#8BE9FD;"></span>
+          </div>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">05 · code snippets</p>
+          <h3>Dracula-toned code blocks.</h3>
+          <p>Dark <code>.codeblock</code> with <code>.kw</code>, <code>.str</code>, <code>.cm</code> spans in every page; Dracula duotone <code>code-bg</code> / <code>code-ink</code> tokens in the matching style guide.</p>
+          <pre class="cap-preview cap-code"><span class="cm">---</span>
+<span class="kw">name</span>: <span class="str">brand-voice</span>
+<span class="cm">---</span></pre>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">06 · interactive code examples</p>
+          <h3>Click to <em>watch it type</em>.</h3>
+          <p>A live typewriter sells the idea better than a screenshot. Click the button; the snippet types itself into the block.</p>
+          <div class="cap-actions">
+            <button type="button" class="cap-copy" data-type-target="cap-06-code">
+              <span class="cap-copy-label">Play demo</span>
+            </button>
+            <span class="cap-copy-status" role="status" aria-live="polite"></span>
+          </div>
+          <pre id="cap-06-code"
+               class="cap-preview cap-code"
+               tabindex="0"
+               role="region"
+               aria-label="Code sample: yaml"
+               data-snippet="name: brand-voice
+rules:
+  - Verbs over nouns
+  - Cut every adverb
+  - No em-dashes in product copy
+  - Short sentences only
+  - First person plural always"><span class="kw">name</span>: <span class="str">brand-voice</span>
+<span class="kw">rules</span>:
+  <span class="kw">-</span> <span class="str">Verbs over nouns</span>
+  <span class="kw">-</span> <span class="str">Cut every adverb</span>
+  <span class="kw">-</span> <span class="str">No em-dashes in product copy</span>
+  <span class="kw">-</span> <span class="str">Short sentences only</span>
+  <span class="kw">-</span> <span class="str">First person plural always</span></pre>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">07 · animation</p>
+          <h3>Themed motion, motion-safe.</h3>
+          <p>Inline SVG centerpieces driven by CSS keyframes, wrapped in <code>prefers-reduced-motion</code> guards.</p>
+          <div class="cap-preview cap-motion" aria-hidden="true">
+            <svg class="cap-line" viewBox="0 0 120 36" preserveAspectRatio="none" role="img" focusable="false">
+              <line class="cap-line-axis" x1="0" y1="32" x2="120" y2="32" />
+              <polyline class="cap-line-path" points="2,28 22,22 42,26 62,14 82,18 102,8 118,12" />
+              <circle class="cap-line-dot" cx="118" cy="12" r="2.5" />
+            </svg>
+            <div class="cap-bars">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="cap">
+          <p class="cap-eyebrow">08 · built-in accessibility</p>
+          <h3>Checked before write.</h3>
+          <p>Every page passes the Accessibility Bar before it leaves the skill.</p>
+          <ul class="cap-preview cap-list">
+            <li>Skip link + single h1</li>
+            <li>Landmarks + aria-labels</li>
+            <li>Focus-visible outline</li>
+            <li>AA contrast</li>
+            <li>Honors reduced motion</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
     <section class="step faq">
       <p class="step-num">faq · troubleshooting</p>
       <h2>Common questions.</h2>
@@ -328,5 +689,94 @@ a Skill is for new users.</pre>
       <p>Example mood board reference images on this page were provided by the repo author and are intended for inspiration only.</p>
     </footer>
   </main>
+  <script>
+    (function () {
+      var prefersReduced = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function escapeHtml(s) {
+        return s.replace(/[&<>]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+        });
+      }
+
+      function tokenizeYaml(text) {
+        return text.split('\n').map(function (line) {
+          var tail = '';
+          var hash = line.indexOf('#');
+          if (hash !== -1) {
+            tail = '<span class="cm">' + escapeHtml(line.slice(hash)) + '</span>';
+            line = line.slice(0, hash);
+          }
+          var m = line.match(/^(\s*)-\s?(.*)$/);
+          if (m) {
+            return escapeHtml(m[1]) + '<span class="kw">-</span>' +
+                   (m[2] ? ' <span class="str">' + escapeHtml(m[2]) + '</span>' : '') + tail;
+          }
+          m = line.match(/^(\s*)([\w.\-]+)(:)(\s*)(.*)$/);
+          if (m) {
+            var val = m[5] ? '<span class="str">' + escapeHtml(m[5]) + '</span>' : '';
+            return escapeHtml(m[1]) + '<span class="kw">' + escapeHtml(m[2]) + '</span>' +
+                   m[3] + escapeHtml(m[4]) + val + tail;
+          }
+          return escapeHtml(line) + tail;
+        }).join('\n');
+      }
+
+      var buttons = document.querySelectorAll('.cap-copy[data-type-target]');
+      if (!buttons.length) return;
+
+      buttons.forEach(function (btn) {
+        var target = document.getElementById(btn.getAttribute('data-type-target'));
+        if (!target) return;
+        var card    = btn.closest('.cap');
+        var status  = card ? card.querySelector('.cap-copy-status') : null;
+        var label   = btn.querySelector('.cap-copy-label') || btn;
+        var snippet = target.getAttribute('data-snippet') || target.textContent;
+        var isCode  = target.classList.contains('cap-code');
+        var typing  = false;
+
+        function render(text) {
+          if (isCode) {
+            target.innerHTML = tokenizeYaml(text);
+          } else {
+            target.textContent = text;
+          }
+        }
+
+        render(snippet);
+
+        btn.addEventListener('click', function () {
+          if (typing) return;
+          typing = true;
+          label.textContent = 'Typing…';
+          if (status) status.textContent = '';
+
+          if (prefersReduced) {
+            render(snippet);
+            finish();
+            return;
+          }
+
+          render('');
+          target.classList.add('is-typing');
+          var i = 0;
+          (function tick() {
+            if (i >= snippet.length) { finish(); return; }
+            i++;
+            render(snippet.slice(0, i));
+            setTimeout(tick, 18);
+          })();
+
+          function finish() {
+            target.classList.remove('is-typing');
+            label.textContent = 'Play again';
+            if (status) status.textContent = 'Demo complete.';
+            typing = false;
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
