@@ -141,6 +141,27 @@
     .hint-toggle {
       margin-top: 10px;
     }
+    .protip {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      max-width: 65ch;
+    }
+    .protip-label {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+    .protip p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
     .hint-toggle > summary {
       display: inline-block;
       list-style: none;
@@ -307,6 +328,67 @@
       border-left: 3px solid var(--accent);
       padding-left: 14px;
       margin: 0;
+    }
+
+    .anatomy {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+      align-items: start;
+    }
+    .anatomy-file {
+      border: 1px solid var(--rule);
+      background: #fff;
+      padding: 22px;
+      min-width: 0;
+    }
+    .anatomy-file .cap-eyebrow {
+      margin-bottom: 12px;
+    }
+    .anatomy-file pre {
+      margin-top: 0;
+    }
+    .anatomy-notes {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 0;
+    }
+    .anatomy-note {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      padding: 16px 18px;
+    }
+    .anatomy-note p {
+      margin: 0;
+    }
+    .anatomy-note p + p {
+      margin-top: 8px;
+    }
+    .anatomy-note-label {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .anatomy-hosts {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      margin-top: 28px;
+      text-align: center;
+      max-width: 65ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 760px) {
+      .anatomy {
+        grid-template-columns: 1fr;
+      }
     }
     .cap-swatches {
       display: grid;
@@ -505,13 +587,17 @@
         ├── moodboard-to-html/
         ├── moodboard-to-template/
         └── zine-page/</pre>
+      <aside class="protip" role="note" aria-label="Pro tip">
+        <p class="protip-label">▸ Protip</p>
+        <p>Adding skills to a repo that's already open in VS Code? Reload the window so Copilot Chat picks them up: <code>Ctrl+Shift+P</code> → <em>Developer: Reload Window</em>.</p>
+      </aside>
     </section>
 
     <section class="step">
       <p class="step-num">02 · open chat</p>
       <h2>Open GitHub Copilot Chat in VS Code.</h2>
       <p>Click the Copilot icon in the VS Code title bar, or press <code>Ctrl+Alt+I</code> on Windows / Linux (<code>Cmd+Ctrl+I</code> on macOS). The Chat panel opens on the right.</p>
-      <p>Copilot auto-discovers skills under <code>.github/skills/</code>. No install command. No restart.</p>
+      <p>Copilot auto-discovers skills under <code>.github/skills/</code> — no install command, no build step, no selecting a agent or typing a prompt. If you just dropped the folder into an open workspace, reload the window once (see Step 01) and you're set.</p>
       <details class="hint-toggle">
         <summary>Don't see the Copilot Icon?</summary>
         <p class="hint">If you don't see a Copilot icon, install the GitHub Copilot Chat extension from the Extensions view first.</p>
@@ -673,9 +759,51 @@ rules:
       </div>
     </section>
 
+    <section class="step" id="anatomy">
+      <p class="step-num">06 · anatomy</p>
+      <h2>A skill is two things: a <em>YAML header</em> and a <em>Markdown body</em>.</h2>
+      <p class="lede">Your agent host reads the header to decide whether to use the skill. The model reads the body to actually do the work.</p>
+
+      <div class="anatomy">
+        <article class="anatomy-file">
+          <p class="cap-eyebrow">.github/skills/brand-voice/SKILL.md</p>
+          <pre class="cap-code"><span class="cm">---</span>
+<span class="kw">name</span>: <span class="str">brand-voice</span>
+<span class="kw">description</span>: <span class="str">Apply our editorial voice —</span>
+<span class="str">  short verbs, no adverbs, no em-dashes</span>
+<span class="str">  in product copy.</span>
+<span class="cm">---</span>
+
+# Brand voice
+
+Verbs over nouns. Cut every adverb.
+Short sentences only. First person
+plural, always.</pre>
+        </article>
+
+        <div class="anatomy-notes">
+          <aside class="anatomy-note">
+            <p class="anatomy-note-label">Header · agent-specific</p>
+            <p>The host — GitHub Copilot, Claude Code, Cursor, Codex — matches the <code>description</code> against your request to decide whether to load the skill into context. <strong>The host does this, not the model.</strong></p>
+          </aside>
+          <aside class="anatomy-note">
+            <p class="anatomy-note-label">Body · model-agnostic</p>
+            <p>Once loaded, whichever model your host is wired to — GPT, Claude, Gemini — reads the Markdown. Swap the model; the <code>SKILL.md</code> doesn't change.</p>
+          </aside>
+        </div>
+      </div>
+
+      <p class="anatomy-hosts">Same <code>SKILL.md</code> file. Different host. Different model. <em>It still works.</em></p>
+    </section>
+
     <section class="step faq">
       <p class="step-num">faq · troubleshooting</p>
       <h2>Common questions.</h2>
+      <h3>What is a <code>SKILL.md</code> and how is it different from an agent and a prompt?</h3>
+      <p>The easiest way to keep these straight is to ask <em>who invokes it?</em></p>
+      <p>A <strong>skill</strong> (a <code>SKILL.md</code> file in <code>.github/skills/&lt;name&gt;/</code>) is something <strong>the model picks for you</strong>. Copilot reads the skill's <code>description</code> from its YAML frontmatter and auto-loads it when your request matches — that's how this repo's three skills get triggered. You can also run one explicitly by typing <code>/skill-name</code>.</p>
+      <p>A <strong>custom agent</strong> (an <code>.agent.md</code> file in <code>.github/agents/</code>) is something <strong>you pick</strong> from the agents dropdown in the Chat view. It's a persistent persona — security reviewer, planner, whatever — with its own instructions, allowed tools, and preferred model, and it stays active until you switch away.</p>
+      <p>A <strong>prompt file</strong> (a <code>.prompt.md</code> file in <code>.github/prompts/</code>) is something <strong>you type as a slash command</strong>. It's a saved one-shot template — never auto-loaded — that runs when you invoke <code>/prompt-name</code>.</p>
       <h3>Copilot doesn't see my skill — what now?</h3>
       <p>Double-check the path is exactly <code>.github/skills/&lt;skill-name&gt;/SKILL.md</code>. If it still isn't picked up, reload the VS Code window (<code>Ctrl+Shift+P</code> → <em>Developer: Reload Window</em>).</p>
       <h3>Which Copilot model should I use?</h3>

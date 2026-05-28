@@ -28,6 +28,7 @@ Do **not** use this skill for:
 - Edits to a single existing page (just edit directly)
 - README, docs, or non-zine HTML
 - Adding new shared styles to the global stylesheet (do that directly)
+- Single-page tabbed, accordion, or carousel layouts that hide inactive content via `hidden` / `display: none`. The skill's reading model is one document per Part. If a future archetype adds a stacked single-page layout (the `single-page-scrolling` archetype on the roadmap), it will use in-page anchors and stacked sections, not a tab widget.
 
 
 ## What it Produces
@@ -68,7 +69,20 @@ If `zine.config.json` is missing, ask the user once for each field, then offer t
 
 ## Procedure
 
+### Decision gate: how many pages?
+
+Before running any other step, resolve this question with the user. The skill produces serialized pages — one HTML file per Part, linked by prev/next pills (the canonical model). Phrases like *"3-part series"*, *"3 chapters"*, or *"3 sections"* are ambiguous. Ask:
+
+> *"This skill produces serialized pages — one HTML file per Part, linked by prev/next pills (the canonical model). Did you mean:*
+> *(a) Three separate Part files in a folder, each a full Part (recommended; what this skill is built for).*
+> *(b) One bundled scrolling page with all three parts stacked, navigated by in-page anchors. Note: this is a future archetype; today the skill only emits (a).*
+> *(c) Something else — describe what you want."*
+
+If the user picks (a), proceed to Step 0. If the user picks (b) or (c), **stop** and surface the limitation rather than improvising a single-page tabbed, accordion, or carousel layout — that is explicitly out of scope per the "Do not use this skill for" list above.
+
 ### Step 0: Seed or generate `global.css`
+
+**Subfolder placement precondition.** Before asking the Step 0 question, confirm the host repo path where `stylesheet` should land. If the series lives in a subfolder (for example `guidance/getting-started/`), the user's `zine.config.json` `stylesheet` field is relative to the repo root and the page files go in `fileLocation`. Do not assume `./css/global.css`.
 
 Run this step **only when the configured stylesheet does not exist yet** (first-time setup in a new repo). If `css/global.css` already exists, skip to Step 1.
 
@@ -319,6 +333,7 @@ Rules that apply to **every** archetype:
 6. **Always include `.page-nav` with prev/next pills** before the `<footer>`. Use `class="prev-pill"` / `class="next-pill"`.
 7. **Footer**: one short line from `config.footerLine`, usually in the `.colophon` style.
 8. **Body width**: respect `--container-max` via `.container` for editorial; noir-wall and visual-diagram are typically full-bleed.
+9. **Never inline more than the per-page `:root` accent overrides plus page-only layout selectors.** If `css/global.css` does not exist on disk, **stop and run Step 0 first**. The skill must never produce a page whose inline `<style>` redeclares any of the global tokens (`--bg`, `--ink`, `--display`, `--body`, `--mono`, `--container-max`).
 
 ### 6. Write and confirm
 
@@ -458,6 +473,7 @@ The bundled `default-global.css` already ships `grid-template-columns: minmax(0,
 - Skipping the prev/next pills (breaks the reading flow of the series).
 - Inlining the full global palette in every page (defeats the shared stylesheet).
 - Hard-coding the series name, year, or footer line — always read from `zine.config.json`.
+- Wrapping `<code class="codeblock">` inside `<pre class="...">` where the `<pre>` selector is undefined, or using `<div class="codeblock">` without `white-space: pre-wrap`. The `.codeblock` class in `default-global.css` is designed for `<pre><code class="codeblock">...</code></pre>` and assumes the outer `<pre>` carries the default `white-space: pre` behavior. Per-page CSS must not redefine the class.
 
 ## Porting to a new repo
 
@@ -469,3 +485,14 @@ To use this skill in a fresh repo:
 4. Optionally hand-build the **first** page so the agent has a richer visual reference. From page 2 onward, the skill handles it.
 
 The minimum portable bundle is just `SKILL.md` + `assets/default-global.css`. Everything else is generated or asked-for at runtime.
+
+### Static-site-generator hosts
+
+If the host repo is a static-site generator project, the emitted page may need to integrate with the generator's layout chain instead of standing alone. Detect the generator by these markers:
+
+- **Jekyll** — `_config.yml` at the repo root.
+- **MkDocs** — `mkdocs.yml` at the repo root.
+- **Hugo** — `config.toml` or `hugo.toml` at the repo root.
+- **Docusaurus** — `docusaurus.config.js` at the repo root.
+
+When one of these is present, **ask the user** whether the page should integrate with the generator (for example, Jekyll integration means adding frontmatter such as `---\nlayout: none\npermalink: /...\n---` so Jekyll processes the page without wrapping it in the theme) or stand alone as raw HTML (accepting that the site theme will not wrap it and that relative `.md` links will not be rewritten). The default behavior is to ask, not to assume.
