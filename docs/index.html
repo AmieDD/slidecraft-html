@@ -141,6 +141,27 @@
     .hint-toggle {
       margin-top: 10px;
     }
+    .protip {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      max-width: 65ch;
+    }
+    .protip-label {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+    .protip p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
     .hint-toggle > summary {
       display: inline-block;
       list-style: none;
@@ -505,13 +526,17 @@
         ├── moodboard-to-html/
         ├── moodboard-to-template/
         └── zine-page/</pre>
+      <aside class="protip" role="note" aria-label="Pro tip">
+        <p class="protip-label">▸ Protip</p>
+        <p>Adding skills to a repo that's already open in VS Code? Reload the window so Copilot Chat picks them up: <code>Ctrl+Shift+P</code> → <em>Developer: Reload Window</em>.</p>
+      </aside>
     </section>
 
     <section class="step">
       <p class="step-num">02 · open chat</p>
       <h2>Open GitHub Copilot Chat in VS Code.</h2>
       <p>Click the Copilot icon in the VS Code title bar, or press <code>Ctrl+Alt+I</code> on Windows / Linux (<code>Cmd+Ctrl+I</code> on macOS). The Chat panel opens on the right.</p>
-      <p>Copilot auto-discovers skills under <code>.github/skills/</code>. No install command. No restart.</p>
+      <p>Copilot auto-discovers skills under <code>.github/skills/</code> — no install command, no build step, no selecting a agent or typing a prompt. If you just dropped the folder into an open workspace, reload the window once (see Step 01) and you're set.</p>
       <details class="hint-toggle">
         <summary>Don't see the Copilot Icon?</summary>
         <p class="hint">If you don't see a Copilot icon, install the GitHub Copilot Chat extension from the Extensions view first.</p>
