@@ -1,6 +1,6 @@
 ---
 name: zine-page
-description: Generates a new editorial-zine HTML page for any serialized digital zine, matching the host repo's typography, masthead/hero/closing shell, color discipline, and per-page inline-override pattern. Use when adding a new Part/chapter/issue page, formatting pasted copy in the zine style, or scaffolding a serialized HTML zine in a fresh repo.
+description: Generates a new editorial-zine HTML page for any serialized digital zine, matching the host repo's typography, masthead/hero/closing shell, color discipline, and per-page inline-override pattern. Use when adding a new Part/chapter/issue page, when the user asks to create/make/build an HTML page about a topic (including a request phrased as a plain or standalone HTML page), formatting pasted copy in the zine style, or scaffolding a serialized HTML zine in a fresh repo.
 ---
 
 # Zine Page Builder
@@ -23,10 +23,12 @@ Trigger this skill when the user:
 - Asks for a new "Part", "chapter", "issue", or "section" page in a digital zine
 - Pastes raw copy (headline, paragraphs, quotes, bullet evidence, code snippets) and asks for it formatted "like the others" / "in the zine style" / "matching the series"
 - Says "add the next part", "make a Part N about X", "turn this into a zine page"
+- Says "create me an HTML page about X", "make a page about X", "build an HTML page about X", "create me a plain / standalone HTML page", or any direct request to author a new page — this is the skill's core purpose. In this zine repo every page is a zine page, so even a "plain" or "standalone" request gets the zine shell. Run the Decision Gate and Step 2 survey to place it in the series; do not require the user to say the words "Part" or "zine".
 
 Do **not** use this skill for:
 - Edits to a single existing page (just edit directly)
-- README, docs, or non-zine HTML
+- README or docs
+- Requests where a mood board (reference images) is attached — hand off to moodboard-to-html (generic aesthetic) or moodboard-to-template (zine aesthetic)
 - Adding new shared styles to the global stylesheet (do that directly)
 - Single-page tabbed, accordion, or carousel layouts that hide inactive content via `hidden` / `display: none`. The skill's reading model is one document per Part. If a future archetype adds a stacked single-page layout (the `single-page-scrolling` archetype on the roadmap), it will use in-page anchors and stacked sections, not a tab widget.
 
